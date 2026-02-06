@@ -23,6 +23,7 @@ import {
     Feather,
     LogOut,
     Shield,
+    Volume2,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
@@ -43,6 +44,7 @@ const navigation = [
             { name: 'Product Desc', href: '/dashboard/create/product', icon: ShoppingBag },
             { name: 'LinkedIn', href: '/dashboard/create/linkedin', icon: Share2 },
             { name: 'Poem', href: '/dashboard/create/poem', icon: Feather },
+            { name: 'Text to Speech', href: '/dashboard/create/tts', icon: Volume2 },
         ]
     },
     { name: 'Content Library', href: '/dashboard/library', icon: FolderOpen },
