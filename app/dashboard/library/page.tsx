@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import Card, { CardHeader, CardTitle, CardContent } from '@/components/ui/Card'
 import { FileText, Trash2, ExternalLink } from 'lucide-react'
 import { formatDate } from '@/lib/utils'
-import Loading from '@/components/ui/Loading'
+import { Spinner } from '@/components/ui/Loading'
 
 export default function ContentLibrary() {
     const [content, setContent] = useState<any[]>([])
@@ -83,8 +83,8 @@ export default function ContentLibrary() {
                         key={type}
                         onClick={() => setFilter(type)}
                         className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${filter === type
-                                ? 'bg-primary-600 text-white'
-                                : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700'
+                            ? 'bg-primary-600 text-white'
+                            : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700'
                             }`}
                     >
                         {type === 'all' ? 'All Content' : getTypeLabel(type)}
@@ -95,7 +95,7 @@ export default function ContentLibrary() {
             {/* Content Grid */}
             {loading ? (
                 <div className="flex justify-center py-12">
-                    <Loading.Spinner size="lg" />
+                    <Spinner size="lg" />
                 </div>
             ) : content.length === 0 ? (
                 <Card variant="default">

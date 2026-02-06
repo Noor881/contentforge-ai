@@ -4,7 +4,7 @@ import { useState, useRef } from 'react'
 import Button from './ui/Button'
 import { Volume2, Download, Loader2, Play, Pause } from 'lucide-react'
 import toast from 'react-hot-toast'
-import { TTSVoice, VOICE_DESCRIPTIONS } from '@/lib/tts'
+import { TTSVoice, VOICE_DESCRIPTIONS } from '@/lib/tts-types'
 
 interface TTSPlayerProps {
     text: string
