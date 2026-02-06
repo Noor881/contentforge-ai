@@ -1,4 +1,5 @@
 import Stripe from 'stripe'
+import { prisma } from '@/lib/db'
 
 // Lazy initialization to prevent build-time errors
 let stripeInstance: Stripe | null = null
@@ -24,19 +25,22 @@ export const PRICE_IDS = {
 export async function createCheckoutSession({
     userId,
     email,
+    userEmail,
     priceId,
     successUrl,
     cancelUrl,
 }: {
     userId: string
-    email: string
+    email?: string
+    userEmail?: string
     priceId: string
     successUrl: string
     cancelUrl: string
 }) {
     const stripe = getStripe()
+    const customerEmail = userEmail || email
     const session = await stripe.checkout.sessions.create({
-        customer_email: email,
+        customer_email: customerEmail,
         client_reference_id: userId,
         payment_method_types: ['card'],
         mode: 'subscription',
@@ -56,6 +60,25 @@ export async function createCheckoutSession({
     })
 
     return session
+}
+
+export async function createCustomerPortal(userId: string) {
+    // First, find the user's Stripe customer ID from their subscription
+    const subscription = await prisma.subscription.findUnique({
+        where: { userId },
+        select: { stripeCustomerId: true },
+    })
+
+    if (!subscription?.stripeCustomerId) {
+        throw new Error('No Stripe customer found for this user')
+    }
+
+    const session = await createCustomerPortalSession({
+        customerId: subscription.stripeCustomerId,
+        returnUrl: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard/settings`,
+    })
+
+    return session.url
 }
 
 export async function createCustomerPortalSession({

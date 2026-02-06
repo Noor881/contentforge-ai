@@ -159,7 +159,7 @@ Make it:
         </Card>
 
         <div className="space-y-6">
-          <Card variant="glass">
+          <Card variant="bordered">
             <CardHeader>
               <CardTitle>Generated Lyrics</CardTitle>
             </CardHeader>

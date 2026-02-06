@@ -270,7 +270,7 @@ Make it SEO-optimized, engaging, and valuable for readers.`;
 
         {/* Generated Content */}
         <div className="space-y-6">
-          <Card variant="glass">
+          <Card variant="bordered">
             <CardHeader>
               <div className="flex items-center justify-between">
                 <CardTitle>Generated Article</CardTitle>

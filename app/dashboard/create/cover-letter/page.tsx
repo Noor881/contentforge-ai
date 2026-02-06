@@ -174,7 +174,7 @@ Make it personalized and compelling.`;
         </Card>
 
         <div className="space-y-6">
-          <Card variant="glass">
+          <Card variant="bordered">
             <CardHeader>
               <CardTitle>Generated Letter</CardTitle>
             </CardHeader>

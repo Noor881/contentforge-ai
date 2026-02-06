@@ -42,7 +42,7 @@ export default function Hero() {
                         transition={{ duration: 0.3, delay: 0.2 }}
                         className="text-responsive-md text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto leading-relaxed"
                     >
-                        Generate blog posts, social media content, email campaigns, video scripts, and ad copy with cutting-edge AI. Save 10+ hours every week.
+                        Generate blog posts, social media content, emails, video scripts, resumes, cover letters, song lyrics, podcast scripts, and more with cutting-edge AI. Save 10+ hours every week.
                     </motion.p>
 
                     {/* Stats - Clean icons */}

@@ -204,7 +204,7 @@ export default function SocialMediaGenerator() {
           </CardContent>
         </Card>
 
-        <Card variant="glass">
+        <Card variant="bordered">
           <CardHeader>
             <div className="flex items-center justify-between">
               <CardTitle>Generated Post</CardTitle>

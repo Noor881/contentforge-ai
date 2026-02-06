@@ -13,7 +13,13 @@ import {
     Mail,
     Video,
     Target,
-    Search
+    Search,
+    FileText,
+    Music,
+    Mic,
+    ShoppingBag,
+    Share2,
+    Feather,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
@@ -27,6 +33,13 @@ const navigation = [
             { name: 'Video Script', href: '/dashboard/create/video', icon: Video },
             { name: 'Ad Copy', href: '/dashboard/create/ad', icon: Target },
             { name: 'SEO Meta', href: '/dashboard/create/seo', icon: Search },
+            { name: 'Resume', href: '/dashboard/create/resume', icon: FileText },
+            { name: 'Cover Letter', href: '/dashboard/create/cover-letter', icon: FileText },
+            { name: 'Lyrics', href: '/dashboard/create/lyrics', icon: Music },
+            { name: 'Podcast', href: '/dashboard/create/podcast', icon: Mic },
+            { name: 'Product Desc', href: '/dashboard/create/product', icon: ShoppingBag },
+            { name: 'LinkedIn', href: '/dashboard/create/linkedin', icon: Share2 },
+            { name: 'Poem', href: '/dashboard/create/poem', icon: Feather },
         ]
     },
     { name: 'Content Library', href: '/dashboard/library', icon: FolderOpen },

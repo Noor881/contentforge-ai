@@ -135,7 +135,7 @@ export default function VideoScriptGenerator() {
           </CardContent>
         </Card>
 
-        <Card variant="glass">
+        <Card variant="bordered">
           <CardHeader>
             <div className="flex items-center justify-between">
               <CardTitle>Generated Script</CardTitle>

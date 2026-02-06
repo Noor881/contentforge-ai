@@ -128,7 +128,7 @@ export default function AdCopyGenerator() {
           </CardContent>
         </Card>
 
-        <Card variant="glass">
+        <Card variant="bordered">
           <CardHeader>
             <div className="flex items-center justify-between">
               <CardTitle>Generated Ad Copy</CardTitle>

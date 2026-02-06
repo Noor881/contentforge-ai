@@ -292,7 +292,7 @@ Format this as a clean, ATS-friendly resume. Use strong action verbs, quantify a
 
         {/* Generated Content */}
         <div className="space-y-6">
-          <Card variant="glass">
+          <Card variant="bordered">
             <CardHeader>
               <div className="flex items-center justify-between">
                 <CardTitle>Generated Resume</CardTitle>

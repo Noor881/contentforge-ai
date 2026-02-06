@@ -8,30 +8,13 @@ import bcrypt from 'bcryptjs'
 import { startTrial } from '@/lib/trial'
 import { sendWelcomeEmail } from '@/lib/email'
 
+import { authConfig } from '@/auth.config'
+
 export const { handlers, auth, signIn, signOut } = NextAuth({
+    ...authConfig,
     adapter: PrismaAdapter(prisma),
-    session: {
-        strategy: 'jwt',
-    },
-    pages: {
-        signIn: '/login',
-        signOut: '/login',
-        error: '/login',
-    },
-    providers: [
-        GoogleProvider({
-            clientId: process.env.GOOGLE_CLIENT_ID || '',
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
-            authorization: {
-                params: {
-                    prompt: "consent",
-                    access_type: "offline",
-                    response_type: "code"
-                }
-            }
-        }),
-    ],
     callbacks: {
+        ...authConfig.callbacks,
         async signIn({ user, account, profile }) {
             try {
                 // Get IP
@@ -102,7 +85,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             return session
         },
         async jwt({ token, user }) {
-            if (user) {
+            if (user?.id) {
                 token.sub = user.id
             }
             return token

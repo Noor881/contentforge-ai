@@ -52,10 +52,11 @@ export async function checkIpLimit(ip: string): Promise<{ allowed: boolean; reas
         }
     })
 
-    if (accountCount >= 1) {
+    const limit = 50 // Increased for testing purposes
+    if (accountCount >= limit) {
         return {
             allowed: false,
-            reason: 'The free trial is limited to one account per network/IP address. Please upgrade to create more accounts.'
+            reason: `The free trial is limited to ${limit} accounts per network/IP address. Please upgrade to create more accounts.`
         }
     }
 

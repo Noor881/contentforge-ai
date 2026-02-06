@@ -14,7 +14,13 @@ import {
     Mail,
     Video,
     Target,
-    Search
+    Search,
+    FileText,
+    Music,
+    Mic,
+    ShoppingBag,
+    Share2,
+    Feather,
 } from 'lucide-react'
 import { useSession } from 'next-auth/react'
 
@@ -25,6 +31,13 @@ const quickActions = [
     { name: 'Video Script', href: '/dashboard/create/video', icon: Video, color: 'text-red-600' },
     { name: 'Ad Copy', href: '/dashboard/create/ad', icon: Target, color: 'text-orange-600' },
     { name: 'SEO Meta', href: '/dashboard/create/seo', icon: Search, color: 'text-cyan-600' },
+    { name: 'Resume', href: '/dashboard/create/resume', icon: FileText, color: 'text-emerald-600' },
+    { name: 'Cover Letter', href: '/dashboard/create/cover-letter', icon: FileText, color: 'text-teal-600' },
+    { name: 'Lyrics', href: '/dashboard/create/lyrics', icon: Music, color: 'text-pink-600' },
+    { name: 'Podcast', href: '/dashboard/create/podcast', icon: Mic, color: 'text-yellow-600' },
+    { name: 'Product Desc', href: '/dashboard/create/product', icon: ShoppingBag, color: 'text-indigo-600' },
+    { name: 'LinkedIn', href: '/dashboard/create/linkedin', icon: Share2, color: 'text-blue-700' },
+    { name: 'Poem', href: '/dashboard/create/poem', icon: Feather, color: 'text-rose-600' },
 ]
 
 export default function DashboardPage() {

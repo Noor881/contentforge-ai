@@ -46,3 +46,8 @@ build-log.txt
 # database
 prisma/*.db
 prisma/*.db-journal
+
+# secrets and env lists
+env_list.txt
+*_secrets.txt
+*.secret

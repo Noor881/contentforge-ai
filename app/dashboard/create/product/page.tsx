@@ -166,7 +166,7 @@ Optimize for e-commerce, SEO, and conversions. Make it persuasive and customer-f
         </Card>
 
         <div className="space-y-6">
-          <Card variant="glass">
+          <Card variant="bordered">
             <CardHeader>
               <CardTitle>Generated Description</CardTitle>
             </CardHeader>

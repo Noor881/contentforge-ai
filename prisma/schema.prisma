@@ -33,6 +33,7 @@ model User {
   lastIp      String?
   isBlocked   Boolean @default(false)
   blockReason String?
+  isAdmin     Boolean @default(false)
 
   // Device Fingerprinting
   deviceFingerprint  String?

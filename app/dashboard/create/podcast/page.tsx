@@ -139,15 +139,15 @@ Make it conversational, engaging, and well-paced for audio format.`;
               </div>
               {(formData.format === "interview" ||
                 formData.format === "panel") && (
-                <Input
-                  label="Guest Name(s)"
-                  placeholder="Name and title of guest(s)"
-                  value={formData.guests}
-                  onChange={(e) =>
-                    setFormData({ ...formData, guests: e.target.value })
-                  }
-                />
-              )}
+                  <Input
+                    label="Guest Name(s)"
+                    placeholder="Name and title of guest(s)"
+                    value={formData.guests}
+                    onChange={(e) =>
+                      setFormData({ ...formData, guests: e.target.value })
+                    }
+                  />
+                )}
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Key Points to Cover
@@ -176,7 +176,7 @@ Make it conversational, engaging, and well-paced for audio format.`;
         </Card>
 
         <div className="space-y-6">
-          <Card variant="glass">
+          <Card variant="bordered">
             <CardHeader>
               <CardTitle>Generated Script</CardTitle>
             </CardHeader>

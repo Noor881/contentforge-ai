@@ -119,6 +119,7 @@ export async function getUsageStats(userId: string) {
         where: { id: userId },
         select: {
             monthlyUsageCount: true,
+            totalGenerationCount: true,
             subscriptionTier: true,
             usageResetDate: true,
         },
@@ -129,23 +130,29 @@ export async function getUsageStats(userId: string) {
     }
 
     let limit: number
+    let current: number
+
     switch (user.subscriptionTier) {
         case 'pro':
             limit = PRO_TIER_LIMIT
+            current = user.monthlyUsageCount
             break
         case 'enterprise':
             limit = ENTERPRISE_TIER_LIMIT
+            current = user.monthlyUsageCount
             break
         case 'free':
         default:
             limit = FREE_TIER_LIMIT
+            // Free tier uses lifetime generation count for the limit check
+            current = user.totalGenerationCount || user.monthlyUsageCount
             break
     }
 
-    const percentage = Math.min(100, Math.round((user.monthlyUsageCount / limit) * 100))
+    const percentage = Math.min(100, Math.round((current / limit) * 100))
 
     return {
-        current: user.monthlyUsageCount,
+        current,
         limit,
         percentage,
         resetDate: user.usageResetDate,
