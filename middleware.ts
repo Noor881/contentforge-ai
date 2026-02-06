@@ -11,6 +11,7 @@ export const config = {
         '/settings/:path*',
         '/billing/:path*',
         '/subscription/:path*',
+        '/admin/:path*',
         '/login',
         '/signup',
     ],

@@ -2,71 +2,102 @@ import { NextRequest, NextResponse } from 'next/server'
 import { requireAdmin } from '@/lib/admin'
 import { prisma } from '@/lib/db'
 
-interface RouteContext {
-    params: {
-        id: string
+interface RouteParams {
+    params: Promise<{ id: string }>
+}
+
+export async function GET(req: NextRequest, { params }: RouteParams) {
+    try {
+        await requireAdmin()
+        const { id } = await params
+
+        const user = await prisma.user.findUnique({
+            where: { id },
+            include: {
+                content: {
+                    take: 10,
+                    orderBy: { createdAt: 'desc' },
+                },
+                subscriptions: true,
+                suspiciousActivities: {
+                    take: 10,
+                    orderBy: { createdAt: 'desc' },
+                },
+                _count: {
+                    select: { content: true },
+                },
+            },
+        })
+
+        if (!user) {
+            return NextResponse.json({ error: 'User not found' }, { status: 404 })
+        }
+
+        return NextResponse.json({ user })
+    } catch (error: any) {
+        return NextResponse.json(
+            { error: error.message || 'Failed to fetch user' },
+            { status: 500 }
+        )
     }
 }
 
-export async function PATCH(req: NextRequest, context: RouteContext) {
+export async function PATCH(req: NextRequest, { params }: RouteParams) {
     try {
         await requireAdmin()
-
-        const { id } = context.params
+        const { id } = await params
         const body = await req.json()
+        const { action, reason } = body
 
-        const {
-            isBlocked,
-            blockReason,
-            isFlagged,
-            flagReason,
-            subscriptionStatus,
-            subscriptionTier,
-            isAdmin,
-            clearIpFlags,
-        } = body
+        let updateData: any = {}
+        let message = ''
 
-        const updateData: any = {}
-
-        if (typeof isBlocked !== 'undefined') {
-            updateData.isBlocked = isBlocked
-            if (isBlocked && blockReason) {
-                updateData.blockReason = blockReason
-            } else if (!isBlocked) {
-                updateData.blockReason = null
-            }
-        }
-
-        if (typeof isFlagged !== 'undefined') {
-            updateData.isFlagged = isFlagged
-            if (isFlagged && flagReason) {
-                updateData.flagReason = flagReason
-            } else if (!isFlagged) {
-                updateData.flagReason = null
-                updateData.riskScore = 0
-            }
-        }
-
-        if (subscriptionStatus) {
-            updateData.subscriptionStatus = subscriptionStatus
-        }
-
-        if (subscriptionTier) {
-            updateData.subscriptionTier = subscriptionTier
-        }
-
-        if (typeof isAdmin !== 'undefined') {
-            updateData.isAdmin = isAdmin
-        }
-
-        if (clearIpFlags) {
-            // Clear suspicious activity logs for this user
-            await prisma.suspiciousActivity.deleteMany({
-                where: { userId: id },
-            })
-            updateData.isFlagged = false
-            updateData.flagReason = null
-            updateData.riskScore = 0
+        switch (action) {
+            case 'block':
+                updateData = { isBlocked: true, blockReason: reason || 'Blocked by admin' }
+                message = 'User blocked successfully'
+                break
+            case 'unblock':
+                updateData = { isBlocked: false, blockReason: null }
+                message = 'User unblocked successfully'
+                break
+            case 'flag':
+                updateData = { isFlagged: true, flagReason: reason || 'Flagged by admin' }
+                message = 'User flagged successfully'
+                break
+            case 'clearFlags':
+                updateData = { isFlagged: false, flagReason: null, riskScore: 0 }
+                message = 'User flags cleared'
+                break
+            case 'makeAdmin':
+                updateData = { isAdmin: true }
+                message = 'User promoted to admin'
+                break
+            case 'removeAdmin':
+                updateData = { isAdmin: false }
+                message = 'Admin privileges removed'
+                break
+            case 'resetUsage':
+                updateData = { monthlyUsageCount: 0 }
+                message = 'Monthly usage reset'
+                break
+            case 'updateTier':
+                updateData = {
+                    subscriptionTier: body.tier || 'free',
+                    subscriptionStatus: body.tier === 'free' ? 'free' : 'active'
+                }
+                message = `Subscription updated to ${body.tier}`
+                break
+            case 'cancelSubscription':
+                updateData = {
+                    subscriptionStatus: 'cancelled',
+                    subscriptionTier: 'free',
+                    isTrialActive: false
+                }
+                message = 'Subscription cancelled'
+                break
+            default:
+                return NextResponse.json({ error: 'Invalid action' }, { status: 400 })
         }
 
         const user = await prisma.user.update({
@@ -74,8 +105,9 @@ export async function PATCH(req: NextRequest, context: RouteContext) {
             data: updateData,
         })
 
-        return NextResponse.json({ user })
+        return NextResponse.json({ message, user })
     } catch (error: any) {
+        console.error('Admin user update error:', error)
         return NextResponse.json(
             { error: error.message || 'Failed to update user' },
             { status: 500 }
@@ -83,18 +115,24 @@ export async function PATCH(req: NextRequest, context: RouteContext) {
     }
 }
 
-export async function DELETE(req: NextRequest, context: RouteContext) {
+export async function DELETE(req: NextRequest, { params }: RouteParams) {
     try {
         await requireAdmin()
+        const { id } = await params
 
-        const { id } = context.params
+        // Delete all related data first
+        await prisma.$transaction([
+            prisma.content.deleteMany({ where: { userId: id } }),
+            prisma.subscription.deleteMany({ where: { userId: id } }),
+            prisma.suspiciousActivity.deleteMany({ where: { userId: id } }),
+            prisma.account.deleteMany({ where: { userId: id } }),
+            prisma.session.deleteMany({ where: { userId: id } }),
+            prisma.user.delete({ where: { id } }),
+        ])
 
-        await prisma.user.delete({
-            where: { id },
-        })
-
-        return NextResponse.json({ success: true })
+        return NextResponse.json({ message: 'User deleted successfully' })
     } catch (error: any) {
+        console.error('Admin user delete error:', error)
         return NextResponse.json(
             { error: error.message || 'Failed to delete user' },
             { status: 500 }

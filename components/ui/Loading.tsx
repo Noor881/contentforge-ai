@@ -64,3 +64,8 @@ export function LoadingDots({ className }: LoadingDotsProps) {
         </div>
     )
 }
+
+// Default export for backward compatibility
+export default function Loading() {
+    return <PageLoader />
+}

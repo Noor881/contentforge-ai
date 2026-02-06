@@ -8,7 +8,7 @@ export async function GET(req: NextRequest) {
 
         const { searchParams } = new URL(req.url)
         const search = searchParams.get('search') || ''
-        const status = searchParams.get('status') || 'all'
+        const filter = searchParams.get('filter') || 'all'
         const page = parseInt(searchParams.get('page') || '1')
         const limit = parseInt(searchParams.get('limit') || '20')
 
@@ -16,21 +16,41 @@ export async function GET(req: NextRequest) {
 
         const where: any = {}
 
+        // Search by email, name, IP, or fingerprint
         if (search) {
             where.OR = [
                 { email: { contains: search, mode: 'insensitive' } },
                 { name: { contains: search, mode: 'insensitive' } },
+                { signupIp: { contains: search } },
+                { lastIp: { contains: search } },
+                { deviceFingerprint: { contains: search } },
             ]
         }
 
-        if (status === 'flagged') {
-            where.isFlagged = true
-        } else if (status === 'blocked') {
-            where.isBlocked = true
-        } else if (status === 'trial') {
-            where.isTrialActive = true
-        } else if (status === 'paid') {
-            where.subscriptionStatus = 'active'
+        // Filter conditions
+        switch (filter) {
+            case 'active':
+                where.subscriptionStatus = 'active'
+                break
+            case 'trial':
+                where.isTrialActive = true
+                break
+            case 'free':
+                where.subscriptionTier = 'free'
+                where.isTrialActive = false
+                break
+            case 'flagged':
+                where.isFlagged = true
+                break
+            case 'blocked':
+                where.isBlocked = true
+                break
+            case 'admin':
+                where.isAdmin = true
+                break
+            case 'high-risk':
+                where.riskScore = { gte: 50 }
+                break
         }
 
         const [users, total] = await Promise.all([
@@ -45,19 +65,25 @@ export async function GET(req: NextRequest) {
                     email: true,
                     image: true,
                     createdAt: true,
+                    updatedAt: true,
                     isTrialActive: true,
+                    trialEndDate: true,
                     subscriptionStatus: true,
                     subscriptionTier: true,
                     totalGenerationCount: true,
                     monthlyUsageCount: true,
                     signupIp: true,
                     lastIp: true,
+                    deviceFingerprint: true,
                     isBlocked: true,
                     blockReason: true,
                     isFlagged: true,
                     flagReason: true,
                     riskScore: true,
                     isAdmin: true,
+                    _count: {
+                        select: { content: true },
+                    },
                 },
             }),
             prisma.user.count({ where }),
@@ -65,6 +91,7 @@ export async function GET(req: NextRequest) {
 
         return NextResponse.json({
             users,
+            total,
             pagination: {
                 page,
                 limit,
@@ -73,9 +100,10 @@ export async function GET(req: NextRequest) {
             },
         })
     } catch (error: any) {
+        console.error('Admin users API error:', error)
         return NextResponse.json(
             { error: error.message || 'Failed to fetch users' },
-            { status: 500 }
+            { status: error.message === 'Unauthorized' ? 401 : 500 }
         )
     }
 }
