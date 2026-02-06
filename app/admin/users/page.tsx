@@ -600,10 +600,11 @@ function AdminUsersContent() {
                                             }}
                                             disabled={actionLoading === selectedUser.id}
                                         >
-                                            <option value="free">Free</option>
-                                            <option value="trial">Trial (3 days)</option>
-                                            <option value="pro">Pro ($29/month)</option>
-                                            <option value="enterprise">Enterprise ($99/month)</option>
+                                            <option value="free">Free ($0)</option>
+                                            <option value="trial">Trial (3 days Pro access)</option>
+                                            <option value="starter">Starter ($19/month)</option>
+                                            <option value="pro">Pro ($49/month)</option>
+                                            <option value="enterprise">Enterprise ($199/month)</option>
                                         </select>
                                     </div>
                                     <p className="text-xs text-gray-500 mt-2">Current: {selectedUser.subscriptionTier} • Status: {selectedUser.subscriptionStatus}</p>

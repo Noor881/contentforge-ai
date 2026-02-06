@@ -7,33 +7,48 @@ import Link from 'next/link'
 
 const plans = [
     {
-        name: 'Trial',
-        price: 'Free',
-        period: '3 days',
+        name: 'Free',
+        price: '$0',
+        period: '/month',
         description: 'Perfect for trying out ContentForge AI',
         features: [
-            '5 content generations',
-            'All 6 content tools',
-            'Basic templates',
-            'Email support',
+            '10 AI generations per month',
+            'Access to all 13 tools',
+            'Basic text-to-speech',
+            'Community support',
         ],
-        cta: 'Start Free Trial',
+        cta: 'Start Free',
+        href: '/signup',
+        popular: false,
+    },
+    {
+        name: 'Starter',
+        price: '$19',
+        period: '/month',
+        description: 'For individuals and side projects',
+        features: [
+            '100 AI generations per month',
+            'Access to all 13 tools',
+            'Unlimited text-to-speech',
+            'Priority email support',
+            'Export to multiple formats',
+        ],
+        cta: 'Get Starter',
         href: '/signup',
         popular: false,
     },
     {
         name: 'Pro',
-        price: '$29',
+        price: '$49',
         period: '/month',
-        description: 'For professional creators and small teams',
+        description: 'For content creators and small teams',
         features: [
-            '100 content generations/month',
-            'All 6 content tools',
-            'Premium templates',
-            'Priority support',
-            'Advanced customization',
-            'Export to multiple formats',
-            'Content history & favorites',
+            '500 AI generations per month',
+            'Access to all 13 tools',
+            'Priority support (12h response)',
+            'Team collaboration (up to 3)',
+            'Advanced analytics',
+            'Custom templates',
             'API access',
         ],
         cta: 'Upgrade to Pro',
@@ -42,17 +57,14 @@ const plans = [
     },
     {
         name: 'Enterprise',
-        price: '$99',
+        price: '$199',
         period: '/month',
         description: 'For agencies and large teams',
         features: [
-            'Unlimited content generations',
-            'All 6 content tools',
-            'Custom templates',
-            'Dedicated support',
+            'Unlimited AI generations',
+            'Dedicated account manager',
+            'Unlimited team members',
             'White-label options',
-            'Team collaboration',
-            'Advanced analytics',
             'Custom integrations',
             'SLA guarantee',
         ],
@@ -77,12 +89,12 @@ export default function PricingPreview() {
                 </div>
 
                 {/* Pricing Cards */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
                     {plans.map((plan, index) => (
                         <Card
                             key={index}
-                            variant={plan.popular ? 'gradient' : 'default'}
-                            className={`relative ${plan.popular ? 'border-2 border-primary-500 shadow-2xl scale-105' : ''}`}
+                            variant="default"
+                            className={`relative ${plan.popular ? 'border-2 border-primary-500 shadow-2xl lg:scale-105 z-10' : ''}`}
                         >
                             {plan.popular && (
                                 <div className="absolute -top-4 left-1/2 -translate-x-1/2">
