@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import Button from '../ui/Button'
 import { Sparkles, Zap, TrendingUp, ArrowRight } from 'lucide-react'
 import { motion } from 'framer-motion'
@@ -111,12 +112,14 @@ export default function Hero() {
                     className="mt-20 relative"
                 >
                     <div className="rounded-xl border-2 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-4 mx-auto max-w-5xl shadow-clean-xl">
-                        <div className="aspect-video bg-gradient-to-br from-primary-50 to-gray-50 dark:from-gray-800 dark:to-gray-900 rounded-lg flex items-center justify-center border border-gray-200 dark:border-gray-700">
-                            <div className="text-center">
-                                <Sparkles className="h-16 w-16 mx-auto mb-4 text-primary-500" />
-                                <p className="text-gray-900 dark:text-white text-2xl font-bold">AI Content Generation</p>
-                                <p className="text-gray-600 dark:text-gray-400 mt-2">See it in action below</p>
-                            </div>
+                        <div className="aspect-video relative rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700">
+                            <Image
+                                src="/images/hero-dashboard.png"
+                                alt="ContentForge AI Dashboard Preview"
+                                fill
+                                className="object-cover"
+                                priority
+                            />
                         </div>
                     </div>
                 </motion.div>
