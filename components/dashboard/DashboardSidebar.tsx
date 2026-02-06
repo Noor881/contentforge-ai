@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { signOut } from 'next-auth/react'
 import {
     LayoutDashboard,
     Sparkles,
@@ -20,6 +21,8 @@ import {
     ShoppingBag,
     Share2,
     Feather,
+    LogOut,
+    Shield,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
@@ -103,6 +106,24 @@ export default function DashboardSidebar() {
                     )
                 })}
             </nav>
+
+            {/* Admin Link and Sign Out */}
+            <div className="p-4 border-t border-gray-200 dark:border-gray-700 mt-auto">
+                <Link
+                    href="/admin"
+                    className="flex items-center gap-3 px-3 py-2 text-sm rounded-lg transition-colors text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
+                >
+                    <Shield className="h-5 w-5" />
+                    Admin Panel
+                </Link>
+                <button
+                    onClick={() => signOut({ callbackUrl: '/' })}
+                    className="w-full flex items-center gap-3 px-3 py-2 text-sm rounded-lg transition-colors text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 mt-1"
+                >
+                    <LogOut className="h-5 w-5" />
+                    Sign Out
+                </button>
+            </div>
         </aside>
     )
 }
