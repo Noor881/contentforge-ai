@@ -1,11 +1,12 @@
 // TTS Types and Constants - Safe for client-side usage
 
-// Groq Orpheus English voices
+// Groq Orpheus English voices - CORRECT voices as per Groq API
 export type TTSVoice =
     | 'austin'    // Male, conversational
-    | 'hannah'    // Female, warm and friendly
-    | 'jennifer'  // Female, professional
-    | 'john'      // Male, authoritative
+    | 'autumn'    // Female, warm
+    | 'daniel'    // Male, professional
+    | 'diana'     // Female, clear
+    | 'hannah'    // Female, friendly
     | 'troy'      // Male, energetic
 
 export type TTSSpeed = 0.25 | 0.5 | 0.75 | 1.0 | 1.25 | 1.5 | 2.0 | 3.0 | 4.0
@@ -14,14 +15,15 @@ export interface TTSOptions {
     text: string
     voice?: TTSVoice
     speed?: TTSSpeed
-    model?: 'canopylabs/orpheus-v1-english'
+    model?: 'playai/playai-tts'
 }
 
 export const VOICE_DESCRIPTIONS: Record<TTSVoice, string> = {
     austin: 'Male, conversational and friendly',
+    autumn: 'Female, warm and natural',
+    daniel: 'Male, professional and clear',
+    diana: 'Female, articulate and confident',
     hannah: 'Female, warm and approachable',
-    jennifer: 'Female, professional and clear',
-    john: 'Male, authoritative and confident',
     troy: 'Male, energetic and enthusiastic',
 }
 
