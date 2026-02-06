@@ -1,0 +1,203 @@
+// This is your Prisma schema file
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+  password      String?
+
+  // Trial and subscription tracking
+  trialStartDate     DateTime?
+  trialEndDate       DateTime?
+  isTrialActive      Boolean   @default(false)
+  subscriptionStatus String    @default("none") // none, trial, active, cancelled, expired
+  subscriptionTier   String    @default("free") // free, pro, enterprise
+
+  // Usage tracking
+  monthlyUsageCount    Int       @default(0)
+  totalGenerationCount Int       @default(0)
+  usageResetDate       DateTime?
+
+  // Security
+  signupIp    String?
+  lastIp      String?
+  isBlocked   Boolean @default(false)
+  blockReason String?
+
+  // Device Fingerprinting
+  deviceFingerprint  String?
+  fingerprintHistory Json[]  @default([])
+
+  // Behavioral Flags
+  riskScore  Int       @default(0)
+  isFlagged  Boolean   @default(false)
+  flagReason String?
+  reviewedAt DateTime?
+  reviewedBy String?
+
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  accounts             Account[]
+  sessions             Session[]
+  content              Content[]
+  usageLogs            UsageLog[]
+  subscription         Subscription?
+  suspiciousActivities SuspiciousActivity[]
+
+  @@index([email])
+  @@index([deviceFingerprint])
+  @@index([riskScore])
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Subscription {
+  id                     String    @id @default(cuid())
+  userId                 String    @unique
+  stripeCustomerId       String    @unique
+  stripeSubscriptionId   String?   @unique
+  stripePriceId          String?
+  stripeCurrentPeriodEnd DateTime?
+
+  status String @default("inactive") // inactive, active, past_due, cancelled
+  tier   String @default("free") // free, pro, enterprise
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([stripeCustomerId])
+}
+
+model Content {
+  id     String @id @default(cuid())
+  userId String
+
+  type     String // blog, social, email, video-script, ad-copy, seo
+  title    String
+  content  String
+  prompt   String
+  metadata Json? // Store additional data like platform, word count, etc.
+
+  isFavorite Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([type])
+  @@index([createdAt])
+}
+
+model UsageLog {
+  id     String @id @default(cuid())
+  userId String
+
+  type    String // content_generation, api_call
+  details Json?
+
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([createdAt])
+}
+
+model Newsletter {
+  id       String  @id @default(cuid())
+  email    String  @unique
+  isActive Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([email])
+}
+
+model ContactMessage {
+  id      String  @id @default(cuid())
+  name    String
+  email   String
+  subject String
+  message String
+  isRead  Boolean @default(false)
+
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([isRead])
+}
+
+model SuspiciousActivity {
+  id           String  @id @default(cuid())
+  userId       String?
+  fingerprint  String
+  ip           String
+  activityType String // ACCOUNT_FLAGGED, RAPID_SIGNUP, VPN_SWITCHING, etc.
+  riskScore    Int     @default(0)
+  details      Json
+
+  createdAt DateTime @default(now())
+
+  user User? @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([fingerprint])
+  @@index([ip])
+  @@index([createdAt])
+  @@index([riskScore])
+}
