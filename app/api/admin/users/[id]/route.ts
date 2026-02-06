@@ -18,7 +18,7 @@ export async function GET(req: NextRequest, { params }: RouteParams) {
                     take: 10,
                     orderBy: { createdAt: 'desc' },
                 },
-                subscriptions: true,
+                subscription: true,
                 suspiciousActivities: {
                     take: 10,
                     orderBy: { createdAt: 'desc' },
@@ -82,11 +82,38 @@ export async function PATCH(req: NextRequest, { params }: RouteParams) {
                 message = 'Monthly usage reset'
                 break
             case 'updateTier':
-                updateData = {
-                    subscriptionTier: body.tier || 'free',
-                    subscriptionStatus: body.tier === 'free' ? 'free' : 'active'
+            case 'assignPlan':
+                const tier = body.tier || 'free'
+                const now = new Date()
+
+                if (tier === 'free') {
+                    updateData = {
+                        subscriptionTier: 'free',
+                        subscriptionStatus: 'free',
+                        isTrialActive: false,
+                        monthlyUsageCount: 0, // Reset usage on plan change
+                    }
+                } else if (tier === 'trial') {
+                    // Give 3-day trial
+                    const trialEnd = new Date(now)
+                    trialEnd.setDate(trialEnd.getDate() + 3)
+                    updateData = {
+                        subscriptionTier: 'pro',
+                        subscriptionStatus: 'trial',
+                        isTrialActive: true,
+                        trialEndDate: trialEnd,
+                        monthlyUsageCount: 0,
+                    }
+                } else {
+                    // Pro or Enterprise - set as active paid subscription
+                    updateData = {
+                        subscriptionTier: tier,
+                        subscriptionStatus: 'active',
+                        isTrialActive: false,
+                        monthlyUsageCount: 0,
+                    }
                 }
-                message = `Subscription updated to ${body.tier}`
+                message = `Plan updated to ${tier}`
                 break
             case 'cancelSubscription':
                 updateData = {

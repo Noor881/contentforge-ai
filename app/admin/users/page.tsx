@@ -585,42 +585,68 @@ function AdminUsersContent() {
                             </div>
 
                             {/* Actions */}
-                            <div className="grid grid-cols-2 gap-3 pt-4 border-t border-gray-200 dark:border-gray-700">
-                                <button
-                                    onClick={() => handleAction(selectedUser.id, selectedUser.isBlocked ? 'unblock' : 'block')}
-                                    disabled={actionLoading === selectedUser.id}
-                                    className={`flex items-center justify-center gap-2 px-4 py-3 rounded-lg font-medium transition-colors ${selectedUser.isBlocked
-                                        ? 'bg-green-600 text-white hover:bg-green-700'
-                                        : 'bg-red-600 text-white hover:bg-red-700'
-                                        }`}
-                                >
-                                    {selectedUser.isBlocked ? <CheckCircle className="h-5 w-5" /> : <Ban className="h-5 w-5" />}
-                                    {selectedUser.isBlocked ? 'Unblock User' : 'Block User'}
-                                </button>
-                                <button
-                                    onClick={() => handleAction(selectedUser.id, 'clearFlags')}
-                                    disabled={actionLoading === selectedUser.id || !selectedUser.isFlagged}
-                                    className="flex items-center justify-center gap-2 px-4 py-3 bg-yellow-600 text-white rounded-lg font-medium hover:bg-yellow-700 transition-colors disabled:opacity-50"
-                                >
-                                    <AlertTriangle className="h-5 w-5" />
-                                    Clear Flags
-                                </button>
-                                <button
-                                    onClick={() => handleAction(selectedUser.id, selectedUser.isAdmin ? 'removeAdmin' : 'makeAdmin')}
-                                    disabled={actionLoading === selectedUser.id}
-                                    className="flex items-center justify-center gap-2 px-4 py-3 bg-purple-600 text-white rounded-lg font-medium hover:bg-purple-700 transition-colors"
-                                >
-                                    <Shield className="h-5 w-5" />
-                                    {selectedUser.isAdmin ? 'Remove Admin' : 'Make Admin'}
-                                </button>
-                                <button
-                                    onClick={() => handleDeleteUser(selectedUser.id)}
-                                    disabled={actionLoading === selectedUser.id}
-                                    className="flex items-center justify-center gap-2 px-4 py-3 bg-red-600 text-white rounded-lg font-medium hover:bg-red-700 transition-colors"
-                                >
-                                    <Trash2 className="h-5 w-5" />
-                                    Delete User
-                                </button>
+                            <div className="space-y-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+                                {/* Plan Assignment */}
+                                <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 p-4 rounded-lg">
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                        Assign Plan
+                                    </label>
+                                    <div className="flex gap-2">
+                                        <select
+                                            className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500"
+                                            defaultValue={selectedUser.subscriptionTier}
+                                            onChange={(e) => {
+                                                handleAction(selectedUser.id, 'assignPlan', { tier: e.target.value })
+                                            }}
+                                            disabled={actionLoading === selectedUser.id}
+                                        >
+                                            <option value="free">Free</option>
+                                            <option value="trial">Trial (3 days)</option>
+                                            <option value="pro">Pro ($29/month)</option>
+                                            <option value="enterprise">Enterprise ($99/month)</option>
+                                        </select>
+                                    </div>
+                                    <p className="text-xs text-gray-500 mt-2">Current: {selectedUser.subscriptionTier} • Status: {selectedUser.subscriptionStatus}</p>
+                                </div>
+
+                                {/* Action Buttons */}
+                                <div className="grid grid-cols-2 gap-3">
+                                    <button
+                                        onClick={() => handleAction(selectedUser.id, selectedUser.isBlocked ? 'unblock' : 'block')}
+                                        disabled={actionLoading === selectedUser.id}
+                                        className={`flex items-center justify-center gap-2 px-4 py-3 rounded-lg font-medium transition-colors ${selectedUser.isBlocked
+                                            ? 'bg-green-600 text-white hover:bg-green-700'
+                                            : 'bg-red-600 text-white hover:bg-red-700'
+                                            }`}
+                                    >
+                                        {selectedUser.isBlocked ? <CheckCircle className="h-5 w-5" /> : <Ban className="h-5 w-5" />}
+                                        {selectedUser.isBlocked ? 'Unblock User' : 'Block User'}
+                                    </button>
+                                    <button
+                                        onClick={() => handleAction(selectedUser.id, 'clearFlags')}
+                                        disabled={actionLoading === selectedUser.id || !selectedUser.isFlagged}
+                                        className="flex items-center justify-center gap-2 px-4 py-3 bg-yellow-600 text-white rounded-lg font-medium hover:bg-yellow-700 transition-colors disabled:opacity-50"
+                                    >
+                                        <AlertTriangle className="h-5 w-5" />
+                                        Clear Flags
+                                    </button>
+                                    <button
+                                        onClick={() => handleAction(selectedUser.id, selectedUser.isAdmin ? 'removeAdmin' : 'makeAdmin')}
+                                        disabled={actionLoading === selectedUser.id}
+                                        className="flex items-center justify-center gap-2 px-4 py-3 bg-purple-600 text-white rounded-lg font-medium hover:bg-purple-700 transition-colors"
+                                    >
+                                        <Shield className="h-5 w-5" />
+                                        {selectedUser.isAdmin ? 'Remove Admin' : 'Make Admin'}
+                                    </button>
+                                    <button
+                                        onClick={() => handleDeleteUser(selectedUser.id)}
+                                        disabled={actionLoading === selectedUser.id}
+                                        className="flex items-center justify-center gap-2 px-4 py-3 bg-red-600 text-white rounded-lg font-medium hover:bg-red-700 transition-colors"
+                                    >
+                                        <Trash2 className="h-5 w-5" />
+                                        Delete User
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -34,8 +34,18 @@ export const authConfig = {
                 nextUrl.pathname.startsWith('/settings') ||
                 nextUrl.pathname.startsWith('/billing') ||
                 nextUrl.pathname.startsWith('/subscription')
+            const isOnAdmin = nextUrl.pathname.startsWith('/admin')
             const isOnAuth = nextUrl.pathname.startsWith('/login') ||
                 nextUrl.pathname.startsWith('/signup')
+
+            // Protect admin routes - require login first
+            if (isOnAdmin) {
+                if (!isLoggedIn) {
+                    return Response.redirect(new URL('/login', nextUrl))
+                }
+                // Admin check will be done at page level via requireAdmin()
+                return true
+            }
 
             if (isOnDashboard) {
                 if (isLoggedIn) return true
