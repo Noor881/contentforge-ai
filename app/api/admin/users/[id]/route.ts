@@ -81,6 +81,18 @@ export async function PATCH(req: NextRequest, { params }: RouteParams) {
                 updateData = { monthlyUsageCount: 0 }
                 message = 'Monthly usage reset'
                 break
+            case 'extendTrial':
+                const trialDays = body.days || 7
+                const trialEndDate = new Date()
+                trialEndDate.setDate(trialEndDate.getDate() + trialDays)
+                updateData = {
+                    isTrialActive: true,
+                    trialEndDate: trialEndDate,
+                    subscriptionStatus: 'trial',
+                    subscriptionTier: 'pro',
+                }
+                message = `Trial extended by ${trialDays} days`
+                break
             case 'updateTier':
             case 'assignPlan':
                 const tier = body.tier || 'free'

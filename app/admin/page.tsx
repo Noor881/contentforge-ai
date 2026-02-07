@@ -94,31 +94,6 @@ export default async function AdminDashboard() {
             </header>
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                {/* Navigation Tabs */}
-                <nav className="mb-8 flex flex-wrap gap-2">
-                    {[
-                        { href: '/admin', label: 'Overview', icon: BarChart3, active: true },
-                        { href: '/admin/users', label: 'Users', icon: Users },
-                        { href: '/admin/subscriptions', label: 'Subscriptions', icon: CreditCard },
-                        { href: '/admin/payments', label: 'Payments', icon: DollarSign },
-                        { href: '/admin/analytics', label: 'Analytics', icon: TrendingUp },
-                        { href: '/admin/security', label: 'Security', icon: Shield },
-                        { href: '/admin/content', label: 'Content', icon: FileText },
-                        { href: '/admin/settings', label: 'Settings', icon: Settings },
-                    ].map((item) => (
-                        <Link
-                            key={item.href}
-                            href={item.href}
-                            className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all ${item.active
-                                ? 'bg-red-600 text-white'
-                                : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
-                                }`}
-                        >
-                            <item.icon className="h-4 w-4" />
-                            {item.label}
-                        </Link>
-                    ))}
-                </nav>
 
                 {/* Stats Grid */}
                 <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 mb-8">

@@ -48,11 +48,7 @@ export default async function AdminPaymentsPage() {
         prisma.user.count({ where: { subscriptionTier: 'enterprise' } }),
     ])
 
-    // Simulated payment transactions (replace with real Stripe data)
-    const recentPayments = [
-        { id: 1, email: 'user@example.com', amount: 29, status: 'succeeded', date: new Date() },
-        { id: 2, email: 'pro@example.com', amount: 99, status: 'succeeded', date: new Date(Date.now() - 86400000) },
-    ]
+
 
     return (
         <div className="min-h-screen bg-gray-100 dark:bg-gray-900">

@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { signOut } from 'next-auth/react'
+import { signOut, useSession } from 'next-auth/react'
 import {
     LayoutDashboard,
     Sparkles,
@@ -54,6 +54,8 @@ const navigation = [
 
 export default function DashboardSidebar() {
     const pathname = usePathname()
+    const { data: session } = useSession()
+    const isAdmin = session?.user?.isAdmin === true
 
     return (
         <aside className="w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 hidden lg:block">
@@ -109,15 +111,17 @@ export default function DashboardSidebar() {
                 })}
             </nav>
 
-            {/* Admin Link and Sign Out */}
+            {/* Sign Out and Admin (admin-only) */}
             <div className="p-4 border-t border-gray-200 dark:border-gray-700 mt-auto">
-                <Link
-                    href="/admin"
-                    className="flex items-center gap-3 px-3 py-2 text-sm rounded-lg transition-colors text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
-                >
-                    <Shield className="h-5 w-5" />
-                    Admin Panel
-                </Link>
+                {isAdmin && (
+                    <Link
+                        href="/admin"
+                        className="flex items-center gap-3 px-3 py-2 text-sm rounded-lg transition-colors text-amber-600 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-900/20"
+                    >
+                        <Shield className="h-5 w-5" />
+                        Admin Panel
+                    </Link>
+                )}
                 <button
                     onClick={() => signOut({ callbackUrl: '/' })}
                     className="w-full flex items-center gap-3 px-3 py-2 text-sm rounded-lg transition-colors text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 mt-1"

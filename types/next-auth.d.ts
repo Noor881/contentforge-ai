@@ -12,6 +12,7 @@ declare module 'next-auth' {
             subscriptionTier: string
             isTrialActive: boolean
             trialEndDate: Date | null
+            isAdmin: boolean
         }
     }
 
@@ -20,6 +21,7 @@ declare module 'next-auth' {
         subscriptionTier?: string
         isTrialActive?: boolean
         trialEndDate?: Date | null
+        isAdmin?: boolean
     }
 }
 

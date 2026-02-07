@@ -15,6 +15,7 @@ import {
     LogOut,
     LayoutDashboard,
     Home,
+    Mail,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
@@ -30,6 +31,7 @@ const navigation = [
     { name: 'Analytics', href: '/admin/analytics', icon: BarChart3 },
     { name: 'Security', href: '/admin/security', icon: AlertTriangle },
     { name: 'Content', href: '/admin/content', icon: FileText },
+    { name: 'Messages', href: '/admin/messages', icon: Mail },
     { name: 'Settings', href: '/admin/settings', icon: Settings },
 ]
 

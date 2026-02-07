@@ -61,6 +61,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
                         isBlocked: true,
                         isFlagged: true,
                         riskScore: true,
+                        isAdmin: true,
                     },
                 })
 
@@ -80,6 +81,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
                     session.user.subscriptionTier = user.subscriptionTier
                     session.user.isTrialActive = user.isTrialActive
                     session.user.trialEndDate = user.trialEndDate
+                    session.user.isAdmin = user.isAdmin ?? false
                 }
             }
             return session

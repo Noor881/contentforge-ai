@@ -66,6 +66,7 @@ function AdminUsersContent() {
     const [selectedUser, setSelectedUser] = useState<User | null>(null)
     const [showUserModal, setShowUserModal] = useState(false)
     const [actionLoading, setActionLoading] = useState<string | null>(null)
+    const [bulkLoading, setBulkLoading] = useState(false)
 
     const router = useRouter()
     const searchParams = useSearchParams()
@@ -157,6 +158,74 @@ function AdminUsersContent() {
         }
     }
 
+    const handleBulkAction = async (action: string) => {
+        if (selectedUsers.length === 0) return
+        const count = selectedUsers.length
+        if (!confirm(`Are you sure you want to ${action} ${count} user(s)?`)) return
+        setBulkLoading(true)
+        let successCount = 0
+        for (const userId of selectedUsers) {
+            try {
+                if (action === 'delete') {
+                    const res = await fetch(`/api/admin/users/${userId}`, { method: 'DELETE' })
+                    if (res.ok) successCount++
+                } else {
+                    const res = await fetch(`/api/admin/users/${userId}`, {
+                        method: 'PATCH',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ action }),
+                    })
+                    if (res.ok) successCount++
+                }
+            } catch (error) {
+                console.error(`Failed ${action} for user ${userId}:`, error)
+            }
+        }
+        toast.success(`${action} completed for ${successCount}/${count} users`)
+        setSelectedUsers([])
+        setBulkLoading(false)
+        fetchUsers()
+    }
+
+    const handleExportCSV = () => {
+        const headers = ['Name', 'Email', 'Subscription', 'Status', 'Usage', 'Risk Score', 'Blocked', 'Flagged', 'Admin', 'Joined']
+        const rows = users.map(u => [
+            u.name || 'No name',
+            u.email,
+            u.subscriptionTier,
+            u.subscriptionStatus,
+            u.monthlyUsageCount,
+            u.riskScore,
+            u.isBlocked ? 'Yes' : 'No',
+            u.isFlagged ? 'Yes' : 'No',
+            u.isAdmin ? 'Yes' : 'No',
+            new Date(u.createdAt).toLocaleDateString(),
+        ])
+        const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n')
+        const blob = new Blob([csv], { type: 'text/csv' })
+        const url = URL.createObjectURL(blob)
+        const a = document.createElement('a')
+        a.href = url
+        a.download = `users-export-${new Date().toISOString().split('T')[0]}.csv`
+        a.click()
+        URL.revokeObjectURL(url)
+        toast.success('Users exported to CSV')
+    }
+
+    const toggleSelectUser = (userId: string) => {
+        setSelectedUsers(prev =>
+            prev.includes(userId) ? prev.filter(id => id !== userId) : [...prev, userId]
+        )
+    }
+
+    const toggleSelectAll = () => {
+        if (selectedUsers.length === users.length) {
+            setSelectedUsers([])
+        } else {
+            setSelectedUsers(users.map(u => u.id))
+        }
+    }
+
     const totalPages = Math.ceil(totalUsers / perPage)
 
     const filterOptions = [
@@ -242,12 +311,60 @@ function AdminUsersContent() {
                         </div>
 
                         {/* Export */}
-                        <button className="flex items-center gap-2 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                        <button
+                            onClick={handleExportCSV}
+                            className="flex items-center gap-2 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-gray-700 dark:text-gray-300"
+                        >
                             <Download className="h-4 w-4" />
-                            Export
+                            Export CSV
                         </button>
                     </div>
                 </div>
+
+                {/* Bulk Action Bar */}
+                {selectedUsers.length > 0 && (
+                    <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl p-4 mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                        <p className="text-sm font-medium text-blue-800 dark:text-blue-300">
+                            {selectedUsers.length} user(s) selected
+                        </p>
+                        <div className="flex gap-2 flex-wrap">
+                            <button
+                                onClick={() => handleBulkAction('block')}
+                                disabled={bulkLoading}
+                                className="flex items-center gap-1.5 px-3 py-1.5 bg-red-600 text-white rounded-lg text-sm font-medium hover:bg-red-700 transition-colors disabled:opacity-50"
+                            >
+                                <Ban className="h-3.5 w-3.5" /> Block All
+                            </button>
+                            <button
+                                onClick={() => handleBulkAction('unblock')}
+                                disabled={bulkLoading}
+                                className="flex items-center gap-1.5 px-3 py-1.5 bg-green-600 text-white rounded-lg text-sm font-medium hover:bg-green-700 transition-colors disabled:opacity-50"
+                            >
+                                <CheckCircle className="h-3.5 w-3.5" /> Unblock All
+                            </button>
+                            <button
+                                onClick={() => handleBulkAction('resetUsage')}
+                                disabled={bulkLoading}
+                                className="flex items-center gap-1.5 px-3 py-1.5 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors disabled:opacity-50"
+                            >
+                                <RefreshCw className="h-3.5 w-3.5" /> Reset Usage
+                            </button>
+                            <button
+                                onClick={() => handleBulkAction('delete')}
+                                disabled={bulkLoading}
+                                className="flex items-center gap-1.5 px-3 py-1.5 bg-red-800 text-white rounded-lg text-sm font-medium hover:bg-red-900 transition-colors disabled:opacity-50"
+                            >
+                                <Trash2 className="h-3.5 w-3.5" /> Delete All
+                            </button>
+                            <button
+                                onClick={() => setSelectedUsers([])}
+                                className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg text-sm hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+                            >
+                                Clear Selection
+                            </button>
+                        </div>
+                    </div>
+                )}
 
                 {/* Users Table */}
                 <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
@@ -255,6 +372,14 @@ function AdminUsersContent() {
                         <table className="w-full">
                             <thead className="bg-gray-50 dark:bg-gray-900">
                                 <tr>
+                                    <th className="px-4 py-3 text-left">
+                                        <input
+                                            type="checkbox"
+                                            checked={selectedUsers.length === users.length && users.length > 0}
+                                            onChange={toggleSelectAll}
+                                            className="rounded border-gray-300"
+                                        />
+                                    </th>
                                     <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">
                                         User
                                     </th>
@@ -284,13 +409,13 @@ function AdminUsersContent() {
                             <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
                                 {loading ? (
                                     <tr>
-                                        <td colSpan={8} className="px-4 py-8 text-center text-gray-500">
+                                        <td colSpan={9} className="px-4 py-8 text-center text-gray-500">
                                             Loading...
                                         </td>
                                     </tr>
                                 ) : users.length === 0 ? (
                                     <tr>
-                                        <td colSpan={8} className="px-4 py-8 text-center text-gray-500">
+                                        <td colSpan={9} className="px-4 py-8 text-center text-gray-500">
                                             No users found
                                         </td>
                                     </tr>
@@ -300,6 +425,15 @@ function AdminUsersContent() {
                                             key={user.id}
                                             className="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
                                         >
+                                            {/* Checkbox */}
+                                            <td className="px-4 py-4">
+                                                <input
+                                                    type="checkbox"
+                                                    checked={selectedUsers.includes(user.id)}
+                                                    onChange={() => toggleSelectUser(user.id)}
+                                                    className="rounded border-gray-300"
+                                                />
+                                            </td>
                                             {/* User Info */}
                                             <td className="px-4 py-4">
                                                 <div className="flex items-center gap-3">
@@ -418,9 +552,14 @@ function AdminUsersContent() {
                                                         <Eye className="h-4 w-4 text-gray-600" />
                                                     </button>
                                                     <button
-                                                        onClick={() =>
-                                                            handleAction(user.id, user.isBlocked ? 'unblock' : 'block')
-                                                        }
+                                                        onClick={() => {
+                                                            if (user.isBlocked) {
+                                                                handleAction(user.id, 'unblock')
+                                                            } else {
+                                                                const reason = prompt('Enter block reason (optional):')
+                                                                handleAction(user.id, 'block', { reason: reason || 'Blocked by admin' })
+                                                            }
+                                                        }}
                                                         disabled={actionLoading === user.id}
                                                         className={`p-2 rounded-lg transition-colors ${user.isBlocked
                                                             ? 'hover:bg-green-100 text-green-600'
@@ -610,10 +749,39 @@ function AdminUsersContent() {
                                     <p className="text-xs text-gray-500 mt-2">Current: {selectedUser.subscriptionTier} • Status: {selectedUser.subscriptionStatus}</p>
                                 </div>
 
-                                {/* Action Buttons */}
+                                {/* Extend Trial */}
+                                <div className="bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 p-4 rounded-lg">
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                        Extend Trial
+                                    </label>
+                                    <div className="flex gap-2">
+                                        {[3, 7, 14, 30].map(days => (
+                                            <button
+                                                key={days}
+                                                onClick={() => handleAction(selectedUser.id, 'extendTrial', { days })}
+                                                disabled={actionLoading === selectedUser.id}
+                                                className="flex-1 px-3 py-2 bg-amber-600 text-white rounded-lg text-sm font-medium hover:bg-amber-700 transition-colors disabled:opacity-50"
+                                            >
+                                                {days}d
+                                            </button>
+                                        ))}
+                                    </div>
+                                    <p className="text-xs text-gray-500 mt-2">
+                                        Trial end: {selectedUser.trialEndDate ? new Date(selectedUser.trialEndDate).toLocaleDateString() : 'No active trial'}
+                                    </p>
+                                </div>
+
+                                {/* Quick Actions Row */}
                                 <div className="grid grid-cols-2 gap-3">
                                     <button
-                                        onClick={() => handleAction(selectedUser.id, selectedUser.isBlocked ? 'unblock' : 'block')}
+                                        onClick={() => {
+                                            if (selectedUser.isBlocked) {
+                                                handleAction(selectedUser.id, 'unblock')
+                                            } else {
+                                                const reason = prompt('Enter block reason (optional):')
+                                                handleAction(selectedUser.id, 'block', { reason: reason || 'Blocked by admin' })
+                                            }
+                                        }}
                                         disabled={actionLoading === selectedUser.id}
                                         className={`flex items-center justify-center gap-2 px-4 py-3 rounded-lg font-medium transition-colors ${selectedUser.isBlocked
                                             ? 'bg-green-600 text-white hover:bg-green-700'
@@ -624,12 +792,33 @@ function AdminUsersContent() {
                                         {selectedUser.isBlocked ? 'Unblock User' : 'Block User'}
                                     </button>
                                     <button
-                                        onClick={() => handleAction(selectedUser.id, 'clearFlags')}
-                                        disabled={actionLoading === selectedUser.id || !selectedUser.isFlagged}
-                                        className="flex items-center justify-center gap-2 px-4 py-3 bg-yellow-600 text-white rounded-lg font-medium hover:bg-yellow-700 transition-colors disabled:opacity-50"
+                                        onClick={() => {
+                                            const reason = prompt('Enter flag reason:')
+                                            if (reason) {
+                                                handleAction(selectedUser.id, 'flag', { reason })
+                                            }
+                                        }}
+                                        disabled={actionLoading === selectedUser.id || selectedUser.isFlagged}
+                                        className="flex items-center justify-center gap-2 px-4 py-3 bg-yellow-500 text-white rounded-lg font-medium hover:bg-yellow-600 transition-colors disabled:opacity-50"
                                     >
                                         <AlertTriangle className="h-5 w-5" />
+                                        {selectedUser.isFlagged ? 'Already Flagged' : 'Flag User'}
+                                    </button>
+                                    <button
+                                        onClick={() => handleAction(selectedUser.id, 'clearFlags')}
+                                        disabled={actionLoading === selectedUser.id || !selectedUser.isFlagged}
+                                        className="flex items-center justify-center gap-2 px-4 py-3 bg-teal-600 text-white rounded-lg font-medium hover:bg-teal-700 transition-colors disabled:opacity-50"
+                                    >
+                                        <CheckCircle className="h-5 w-5" />
                                         Clear Flags
+                                    </button>
+                                    <button
+                                        onClick={() => handleAction(selectedUser.id, 'resetUsage')}
+                                        disabled={actionLoading === selectedUser.id}
+                                        className="flex items-center justify-center gap-2 px-4 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors"
+                                    >
+                                        <RefreshCw className="h-5 w-5" />
+                                        Reset Usage
                                     </button>
                                     <button
                                         onClick={() => handleAction(selectedUser.id, selectedUser.isAdmin ? 'removeAdmin' : 'makeAdmin')}
@@ -640,12 +829,20 @@ function AdminUsersContent() {
                                         {selectedUser.isAdmin ? 'Remove Admin' : 'Make Admin'}
                                     </button>
                                     <button
+                                        onClick={() => handleAction(selectedUser.id, 'cancelSubscription')}
+                                        disabled={actionLoading === selectedUser.id || selectedUser.subscriptionStatus === 'free' || selectedUser.subscriptionStatus === 'none'}
+                                        className="flex items-center justify-center gap-2 px-4 py-3 bg-orange-600 text-white rounded-lg font-medium hover:bg-orange-700 transition-colors disabled:opacity-50"
+                                    >
+                                        <CreditCard className="h-5 w-5" />
+                                        Cancel Subscription
+                                    </button>
+                                    <button
                                         onClick={() => handleDeleteUser(selectedUser.id)}
                                         disabled={actionLoading === selectedUser.id}
-                                        className="flex items-center justify-center gap-2 px-4 py-3 bg-red-600 text-white rounded-lg font-medium hover:bg-red-700 transition-colors"
+                                        className="col-span-2 flex items-center justify-center gap-2 px-4 py-3 bg-red-600 text-white rounded-lg font-medium hover:bg-red-700 transition-colors border-2 border-red-700"
                                     >
                                         <Trash2 className="h-5 w-5" />
-                                        Delete User
+                                        Delete User Permanently
                                     </button>
                                 </div>
                             </div>
