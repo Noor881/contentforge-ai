@@ -1,11 +1,12 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 import Card, { CardHeader, CardTitle, CardContent } from '@/components/ui/Card'
 import Input from '@/components/ui/Input'
 import Button from '@/components/ui/Button'
 import toast from 'react-hot-toast'
+import { Sun, Moon, Monitor, Shield, Mail, Clock, Zap } from 'lucide-react'
 
 export default function SettingsPage() {
     const { data: session, update } = useSession()
@@ -20,6 +21,38 @@ export default function SettingsPage() {
     })
     const [isUpdating, setIsUpdating] = useState(false)
     const [isChangingPassword, setIsChangingPassword] = useState(false)
+    const [theme, setTheme] = useState<'light' | 'dark' | 'system'>('system')
+
+    useEffect(() => {
+        if (session?.user?.name) {
+            setFormData(prev => ({ ...prev, name: session.user.name || '' }))
+        }
+    }, [session])
+
+    useEffect(() => {
+        const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | 'system' | null
+        if (savedTheme) {
+            setTheme(savedTheme)
+        }
+    }, [])
+
+    const handleThemeChange = (newTheme: 'light' | 'dark' | 'system') => {
+        setTheme(newTheme)
+        localStorage.setItem('theme', newTheme)
+
+        if (newTheme === 'dark') {
+            document.documentElement.classList.add('dark')
+        } else if (newTheme === 'light') {
+            document.documentElement.classList.remove('dark')
+        } else {
+            if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.documentElement.classList.add('dark')
+            } else {
+                document.documentElement.classList.remove('dark')
+            }
+        }
+        toast.success(`Theme set to ${newTheme}`)
+    }
 
     const handleUpdateProfile = async (e: React.FormEvent) => {
         e.preventDefault()
@@ -33,7 +66,7 @@ export default function SettingsPage() {
             })
 
             if (res.ok) {
-                await update() // Refresh session
+                await update()
                 toast.success('Profile updated successfully!')
             } else {
                 toast.error('Failed to update profile')
@@ -81,6 +114,29 @@ export default function SettingsPage() {
         }
     }
 
+    const handleDeleteAccount = async () => {
+        const email = prompt('To confirm deletion, type your email address:')
+        if (email !== session?.user?.email) {
+            toast.error('Email does not match. Account not deleted.')
+            return
+        }
+
+        const confirmed = confirm('This action is PERMANENT. All your content, settings, and data will be deleted. Are you absolutely sure?')
+        if (!confirmed) return
+
+        try {
+            const res = await fetch('/api/user/delete-account', { method: 'DELETE' })
+            if (res.ok) {
+                toast.success('Account deleted. Goodbye!')
+                window.location.href = '/'
+            } else {
+                toast.error('Failed to delete account')
+            }
+        } catch (error) {
+            toast.error('An error occurred')
+        }
+    }
+
     return (
         <div className="max-w-4xl mx-auto">
             <div className="mb-8">
@@ -88,11 +144,99 @@ export default function SettingsPage() {
                     Account Settings
                 </h1>
                 <p className="text-gray-600 dark:text-gray-400">
-                    Manage your account information and preferences
+                    Manage your account information, appearance, and preferences
                 </p>
             </div>
 
             <div className="space-y-6">
+                {/* Account Overview */}
+                <Card variant="default">
+                    <CardContent>
+                        <div className="flex items-center gap-4">
+                            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary-500 to-secondary-500 flex items-center justify-center text-white text-2xl font-bold">
+                                {(session?.user?.name || 'U')[0].toUpperCase()}
+                            </div>
+                            <div className="flex-1">
+                                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                                    {session?.user?.name || 'User'}
+                                </h3>
+                                <p className="text-sm text-gray-500 dark:text-gray-400">{session?.user?.email}</p>
+                                <div className="flex items-center gap-3 mt-1">
+                                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-400">
+                                        <Zap className="h-3 w-3" />
+                                        {session?.user?.subscriptionTier?.toUpperCase() || 'FREE'}
+                                    </span>
+                                    {session?.user?.isTrialActive && (
+                                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400">
+                                            <Clock className="h-3 w-3" />
+                                            Trial Active
+                                        </span>
+                                    )}
+                                    {session?.user?.isAdmin && (
+                                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400">
+                                            <Shield className="h-3 w-3" />
+                                            Admin
+                                        </span>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    </CardContent>
+                </Card>
+
+                {/* Appearance */}
+                <Card variant="default">
+                    <CardHeader>
+                        <CardTitle className="flex items-center gap-2">
+                            <Sun className="h-5 w-5 text-amber-500" />
+                            Appearance
+                        </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                            Choose how ContentForge looks for you
+                        </p>
+                        <div className="grid grid-cols-3 gap-3">
+                            <button
+                                onClick={() => handleThemeChange('light')}
+                                className={`flex flex-col items-center gap-3 p-4 rounded-xl border-2 transition-all ${theme === 'light'
+                                        ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20'
+                                        : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
+                                    }`}
+                            >
+                                <div className="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center">
+                                    <Sun className="h-6 w-6 text-amber-600" />
+                                </div>
+                                <span className="text-sm font-medium text-gray-900 dark:text-white">Light</span>
+                            </button>
+                            <button
+                                onClick={() => handleThemeChange('dark')}
+                                className={`flex flex-col items-center gap-3 p-4 rounded-xl border-2 transition-all ${theme === 'dark'
+                                        ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20'
+                                        : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
+                                    }`}
+                            >
+                                <div className="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center">
+                                    <Moon className="h-6 w-6 text-blue-400" />
+                                </div>
+                                <span className="text-sm font-medium text-gray-900 dark:text-white">Dark</span>
+                            </button>
+                            <button
+                                onClick={() => handleThemeChange('system')}
+                                className={`flex flex-col items-center gap-3 p-4 rounded-xl border-2 transition-all ${theme === 'system'
+                                        ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20'
+                                        : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
+                                    }`}
+                            >
+                                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-amber-100 to-gray-800 flex items-center justify-center">
+                                    <Monitor className="h-6 w-6 text-gray-600" />
+                                </div>
+                                <span className="text-sm font-medium text-gray-900 dark:text-white">System</span>
+                            </button>
+                        </div>
+                    </CardContent>
+                </Card>
+
                 {/* Profile Information */}
                 <Card variant="default">
                     <CardHeader>
@@ -170,19 +314,19 @@ export default function SettingsPage() {
                     </CardHeader>
                     <CardContent>
                         <div className="space-y-4">
-                            <div>
+                            <div className="p-4 border-2 border-red-200 dark:border-red-900 rounded-xl">
                                 <h4 className="font-semibold text-gray-900 dark:text-white mb-2">
                                     Delete Account
                                 </h4>
                                 <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
-                                    Once you delete your account, there is no going back. Please be certain.
+                                    Permanently delete your account and all associated data. This includes all generated content, settings, and subscription information. This action cannot be undone.
                                 </p>
                                 <Button
                                     variant="outline"
                                     className="border-red-600 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20"
-                                    onClick={() => toast.error('Please contact support to delete your account')}
+                                    onClick={handleDeleteAccount}
                                 >
-                                    Delete Account
+                                    Delete My Account
                                 </Button>
                             </div>
                         </div>
