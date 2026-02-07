@@ -4,6 +4,7 @@ import './globals.css'
 import { generateMetadata as genMeta, generateOrganizationSchema, generateWebsiteSchema } from '@/lib/seo'
 import Toast from '@/components/ui/Toast'
 import { SessionProvider } from 'next-auth/react'
+import { Analytics } from '@vercel/analytics/next'
 
 const inter = Inter({
     subsets: ['latin'],
@@ -65,6 +66,7 @@ export default function RootLayout({
                     {children}
                     <Toast />
                 </SessionProvider>
+                <Analytics />
             </body>
         </html>
     )
