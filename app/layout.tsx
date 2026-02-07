@@ -4,6 +4,7 @@ import './globals.css'
 import { generateMetadata as genMeta, generateOrganizationSchema, generateWebsiteSchema } from '@/lib/seo'
 import Toast from '@/components/ui/Toast'
 import ScrollProgress from '@/components/ui/ScrollProgress'
+import SmoothScroll from '@/components/ui/SmoothScroll'
 import { SessionProvider } from 'next-auth/react'
 
 const inter = Inter({
@@ -63,9 +64,11 @@ export default function RootLayout({
             </head>
             <body className={`${inter.className} antialiased`}>
                 <SessionProvider>
-                    <ScrollProgress />
-                    {children}
-                    <Toast />
+                    <SmoothScroll>
+                        <ScrollProgress />
+                        {children}
+                        <Toast />
+                    </SmoothScroll>
                 </SessionProvider>
             </body>
         </html>

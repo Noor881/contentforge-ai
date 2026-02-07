@@ -3,6 +3,9 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import Button from '../ui/Button'
+import CountUp from '../ui/CountUp'
+import Magnetic from '../ui/Magnetic'
+import StaggeredText from '@/components/ui/StaggeredText'
 import { Sparkles, Zap, TrendingUp, ArrowRight, Play } from 'lucide-react'
 import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion'
 import { useState, useEffect, useRef } from 'react'
@@ -147,20 +150,14 @@ export default function Hero() {
                         <ArrowRight className="h-3.5 w-3.5 text-primary-600" />
                     </motion.div>
 
-                    {/* Hero Heading with Typewriter */}
-                    <motion.h1
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-                        className="text-responsive-xl font-display text-gray-900 dark:text-white mb-6"
-                    >
-                        Create Professional{' '}
-                        <br className="hidden lg:block" />
-                        <span className="text-primary-600 dark:text-primary-400">{typedText}</span>
-                        <span className="typewriter-cursor" />
-                        <br className="hidden lg:block" />
-                        <span className="text-gray-900 dark:text-white">in Seconds</span>
-                    </motion.h1>
+                    {/* Hero Heading with Staggered Text */}
+                    <div className="text-responsive-xl font-display text-gray-900 dark:text-white mb-6 leading-tight">
+                        <StaggeredText text="Create Professional" className="block" delay={0.1} />
+                        <span className="text-primary-600 dark:text-primary-400">
+                            <StaggeredText text="Content" className="block lg:inline" delay={0.4} />
+                        </span>{' '}
+                        <StaggeredText text="in Seconds" className="block lg:inline" delay={0.6} />
+                    </div>
 
                     {/* Subtitle */}
                     <motion.p
@@ -182,9 +179,24 @@ export default function Hero() {
                         className="mb-12 flex flex-wrap justify-center gap-10 text-sm"
                     >
                         {[
-                            { icon: Zap, value: '10,000+', label: 'Creators', color: 'text-yellow-500' },
-                            { icon: TrendingUp, value: '500K+', label: 'Content Generated', color: 'text-primary-500' },
-                            { icon: Sparkles, value: '4.9/5', label: 'Rating', color: 'text-purple-500' },
+                            {
+                                icon: Zap,
+                                label: 'Creators',
+                                color: 'text-yellow-500',
+                                valueComponent: <CountUp to={10000} suffix="+" duration={2.5} />
+                            },
+                            {
+                                icon: TrendingUp,
+                                label: 'Content Generated',
+                                color: 'text-primary-500',
+                                valueComponent: <CountUp to={500} suffix="K+" duration={2.5} delay={0.2} />
+                            },
+                            {
+                                icon: Sparkles,
+                                label: 'Rating',
+                                color: 'text-purple-500',
+                                valueComponent: <CountUp to={4.9} suffix="/5" decimals={1} duration={2} delay={0.4} />
+                            },
                         ].map((stat, i) => (
                             <motion.div
                                 key={i}
@@ -195,7 +207,7 @@ export default function Hero() {
                                 <stat.icon className={`h-5 w-5 ${stat.color}`} />
                                 <span className="text-gray-700 dark:text-gray-300">
                                     <strong className="font-bold text-gray-900 dark:text-white">
-                                        {stat.value}
+                                        {stat.valueComponent}
                                     </strong>{' '}
                                     {stat.label}
                                 </span>
@@ -211,26 +223,30 @@ export default function Hero() {
                         className="flex flex-col sm:flex-row gap-4 justify-center"
                     >
                         <Link href="/signup">
-                            <motion.div
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.98 }}
-                            >
-                                <Button size="lg" className="min-w-[240px] text-lg py-4 px-8 bg-primary-600 hover:bg-primary-700 text-white border-none shadow-xl">
-                                    Start 3-Day Free Trial
-                                    <ArrowRight className="ml-2 h-5 w-5" />
-                                </Button>
-                            </motion.div>
+                            <Magnetic strength={0.2}>
+                                <motion.div
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.98 }}
+                                >
+                                    <Button size="lg" className="min-w-[240px] text-lg py-4 px-8 bg-primary-600 hover:bg-primary-700 text-white border-none shadow-xl">
+                                        Start 3-Day Free Trial
+                                        <ArrowRight className="ml-2 h-5 w-5" />
+                                    </Button>
+                                </motion.div>
+                            </Magnetic>
                         </Link>
                         <Link href="/features">
-                            <motion.div
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.98 }}
-                            >
-                                <Button variant="secondary" size="lg" className="min-w-[240px] glass text-lg py-4 px-8 border-primary-200 dark:border-primary-800">
-                                    <Play className="mr-2 h-5 w-5 text-primary-600" />
-                                    See How It Works
-                                </Button>
-                            </motion.div>
+                            <Magnetic strength={0.2}>
+                                <motion.div
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.98 }}
+                                >
+                                    <Button variant="secondary" size="lg" className="min-w-[240px] glass text-lg py-4 px-8 border-primary-200 dark:border-primary-800">
+                                        <Play className="mr-2 h-5 w-5 text-primary-600" />
+                                        See How It Works
+                                    </Button>
+                                </motion.div>
+                            </Magnetic>
                         </Link>
                     </motion.div>
 

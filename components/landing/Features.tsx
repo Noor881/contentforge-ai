@@ -118,6 +118,7 @@ function FeatureCard({ feature, index }: { feature: typeof features[0]; index: n
     const mouseX = useMotionValue(0)
     const mouseY = useMotionValue(0)
 
+    // 3D Tilt Effect
     const rotateX = useTransform(mouseY, [-150, 150], [8, -8])
     const rotateY = useTransform(mouseX, [-150, 150], [-8, 8])
     const springRotateX = useSpring(rotateX, { stiffness: 200, damping: 25 })
@@ -126,14 +127,24 @@ function FeatureCard({ feature, index }: { feature: typeof features[0]; index: n
     const handleMouseMove = (e: React.MouseEvent) => {
         const rect = cardRef.current?.getBoundingClientRect()
         if (rect) {
+            // Calculate mouse position relative to card for 3D tilt
             mouseX.set(e.clientX - rect.left - rect.width / 2)
             mouseY.set(e.clientY - rect.top - rect.height / 2)
+
+            // Set CSS variables for the Spotlight effect
+            const x = e.clientX - rect.left
+            const y = e.clientY - rect.top
+            cardRef.current?.style.setProperty('--mouse-x', `${x}px`)
+            cardRef.current?.style.setProperty('--mouse-y', `${y}px`)
         }
     }
 
     const handleMouseLeave = () => {
         mouseX.set(0)
         mouseY.set(0)
+        // Reset spotlight slightly
+        cardRef.current?.style.setProperty('--mouse-x', `-999px`)
+        cardRef.current?.style.setProperty('--mouse-y', `-999px`)
     }
 
     const Icon = feature.icon
@@ -143,11 +154,14 @@ function FeatureCard({ feature, index }: { feature: typeof features[0]; index: n
             ref={cardRef}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
-            style={{ perspective: 800 }}
+            style={{
+                perspective: 800,
+            } as any}
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.6, delay: index * 0.08 }}
+            className="group relative h-full"
         >
             <motion.div
                 style={{
@@ -155,37 +169,53 @@ function FeatureCard({ feature, index }: { feature: typeof features[0]; index: n
                     rotateY: springRotateY,
                     transformStyle: 'preserve-3d',
                 }}
+                className="h-full"
             >
-                <Link href={feature.link}>
-                    <div className="group relative h-full glass-card p-6 cursor-pointer overflow-hidden">
-                        {/* Subtle hover background */}
-                        <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gray-50 dark:bg-gray-800/30" />
+                <Link href={feature.link} className="block h-full">
+                    {/* 
+                        SPOTLIGHT BORDER CONTAINER 
+                        This uses the CSS variables to create a moving gradient border 
+                    */}
+                    <div
+                        className="relative h-full rounded-2xl bg-gray-200 dark:bg-gray-800 p-[1px] overflow-hidden transition-colors duration-300"
+                    >
+                        {/* The Spotlight Gradient Layer */}
+                        <div
+                            className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                            style={{
+                                background: `radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(20, 184, 166, 0.4), transparent 40%)`
+                            }}
+                        />
 
-                        {/* Top accent line */}
-                        <div className={`absolute top-0 left-0 right-0 h-1 ${feature.accent} rounded-t-2xl transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500`} />
+                        {/* Inner Card Content */}
+                        <div className="relative h-full rounded-2xl glass-card p-6 overflow-hidden bg-white/90 dark:bg-gray-900/90 backdrop-blur-xl">
 
-                        {/* Icon with solid background */}
-                        <div className={`relative inline-flex rounded-xl p-3.5 ${feature.accent} shadow-lg mb-4 group-hover:shadow-xl transition-shadow duration-300`}>
-                            <Icon className="h-6 w-6 text-white" />
+                            {/* Top accent line */}
+                            <div className={`absolute top-0 left-0 right-0 h-1 ${feature.accent} rounded-t-2xl transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500`} />
 
-                            {/* Shimmer effect on hover */}
-                            <div className="absolute inset-0 rounded-xl overflow-hidden">
-                                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+                            {/* Icon with solid background */}
+                            <div className={`relative inline-flex rounded-xl p-3.5 ${feature.accent} shadow-lg mb-4 group-hover:shadow-xl transition-shadow duration-300 group-hover:scale-110 ease-spring`}>
+                                <Icon className="h-6 w-6 text-white" />
+
+                                {/* Shimmer effect on hover */}
+                                <div className="absolute inset-0 rounded-xl overflow-hidden">
+                                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+                                </div>
                             </div>
-                        </div>
 
-                        {/* Content */}
-                        <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
-                            {feature.title}
-                        </h3>
-                        <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
-                            {feature.description}
-                        </p>
+                            {/* Content */}
+                            <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
+                                {feature.title}
+                            </h3>
+                            <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
+                                {feature.description}
+                            </p>
 
-                        {/* Animated arrow */}
-                        <div className="flex items-center text-sm font-semibold text-primary-600 dark:text-primary-400 opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300">
-                            Try it now
-                            <ArrowRight className="h-4 w-4 ml-1 transform group-hover:translate-x-1 transition-transform" />
+                            {/* Animated arrow */}
+                            <div className="absolute bottom-6 left-6 flex items-center text-sm font-semibold text-primary-600 dark:text-primary-400 opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+                                Try it now
+                                <ArrowRight className="h-4 w-4 ml-1 transform group-hover:translate-x-1 transition-transform" />
+                            </div>
                         </div>
                     </div>
                 </Link>
