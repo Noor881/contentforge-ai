@@ -26,16 +26,32 @@ export function generateMetadata({
         description: desc,
         applicationName: APP_NAME,
         keywords: [
+            // Primary keywords
             'AI content creation',
             'content generator',
-            'blog writer',
-            'social media content',
-            'email marketing',
-            'video script',
-            'ad copy',
-            'SEO content',
-            'ai writing tool',
-            'content marketing',
+            'AI writing tool',
+            // Long-tail keywords - Informational intent
+            'how to use AI for content creation',
+            'AI content generation tutorial for beginners',
+            'best AI tools for writing blog posts 2024',
+            // Long-tail keywords - Commercial intent
+            'free AI content generator online',
+            'AI blog post writer for small business',
+            'affordable AI writing assistant',
+            // Long-tail keywords - Feature-specific
+            'automated social media content creation tool',
+            'AI email marketing template generator',
+            'professional video script AI writer',
+            'AI ad copy generator for Facebook Google LinkedIn',
+            'SEO optimized content generator',
+            // Long-tail keywords - Use-case specific
+            'AI writing tool for content marketing',
+            'generate blog posts with artificial intelligence',
+            'create social media posts automatically',
+            'AI powered email newsletter writer',
+            // Brand + category keywords
+            'ContentForge AI content platform',
+            'best AI content creation software 2024',
         ],
         authors: [{ name: APP_NAME }],
         creator: APP_NAME,

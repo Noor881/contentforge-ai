@@ -1,6 +1,14 @@
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
+import { generateMetadata as genMeta } from '@/lib/seo'
 import { Sparkles } from 'lucide-react'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = genMeta({
+    title: 'About ContentForge AI - Our Story & Mission',
+    description: 'Learn about ContentForge AI, the AI-powered content creation platform empowering over 10,000 creators worldwide. Discover our mission to democratize high-quality AI writing tools for marketers, bloggers, and businesses.',
+    canonical: '/about',
+})
 
 export default function AboutPage() {
     return (

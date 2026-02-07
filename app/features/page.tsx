@@ -8,8 +8,9 @@ import Button from '@/components/ui/Button'
 import Link from 'next/link'
 
 export const metadata: Metadata = genMeta({
-    title: 'Features',
-    description: 'Discover all the powerful AI content creation tools in ContentForge AI. Generate blogs, social media posts, emails, video scripts, ad copy, and SEO content effortlessly.',
+    title: 'AI Content Creation Features - Blog, Social Media, Email & Video Tools',
+    description: 'Explore 13+ powerful AI content creation tools. Generate SEO-optimized blog posts, viral social media content, email marketing campaigns, video scripts, and high-converting ad copy in seconds.',
+    canonical: '/features',
 })
 
 const features = [
