@@ -111,7 +111,7 @@ export default async function AdminAnalyticsPage() {
                             {Math.abs(contentGrowth)}% vs last month
                         </div>
                     </div>
-                    <div className="bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl p-6 text-white">
+                    <div className="bg-green-600 rounded-2xl p-6 text-white">
                         <div className="flex items-center justify-between mb-4">
                             <span className="text-green-100">MRR</span>
                             <TrendingUp className="h-5 w-5 text-white" />

@@ -78,7 +78,7 @@ export default async function AdminPaymentsPage() {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 {/* Revenue Stats */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                    <div className="bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl p-6 text-white">
+                    <div className="bg-green-600 rounded-2xl p-6 text-white">
                         <div className="flex items-center gap-2 mb-2">
                             <DollarSign className="h-6 w-6" />
                             <span className="text-green-100">Monthly Revenue (MRR)</span>
@@ -86,7 +86,7 @@ export default async function AdminPaymentsPage() {
                         <p className="text-4xl font-bold">${totalMRR.toLocaleString()}</p>
                         <p className="text-sm text-green-200 mt-2">From {subscriptions.length} active subscriptions</p>
                     </div>
-                    <div className="bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl p-6 text-white">
+                    <div className="bg-blue-600 rounded-2xl p-6 text-white">
                         <div className="flex items-center gap-2 mb-2">
                             <TrendingUp className="h-6 w-6" />
                             <span className="text-blue-100">Annual Revenue (ARR)</span>

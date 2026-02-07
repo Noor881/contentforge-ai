@@ -21,10 +21,10 @@ export default function Header() {
 
     return (
         <header className="sticky top-0 z-50 w-full glass border-b border-gray-200/50 dark:border-gray-800/50">
-            <nav className="container-custom mx-auto">
+            <nav className="container-custom mx-auto" aria-label="Main navigation">
                 <div className="flex h-16 items-center justify-between">
                     {/* Logo */}
-                    <Link href="/" className="flex items-center space-x-2.5 group">
+                    <Link href="/" className="flex items-center space-x-2.5 group" aria-label="ContentForge AI Home">
                         <div className="relative">
                             <Sparkles className="h-8 w-8 text-primary-600 group-hover:text-primary-500 transition-colors" />
                             <div className="absolute -inset-1 bg-primary-600 rounded-full opacity-0 group-hover:opacity-30 blur transition-opacity duration-300" />
@@ -80,6 +80,8 @@ export default function Header() {
                     <button
                         onClick={() => setIsMenuOpen(!isMenuOpen)}
                         className="md:hidden rounded-xl p-2.5 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                        aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+                        aria-expanded={isMenuOpen}
                     >
                         {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
                     </button>

@@ -153,7 +153,7 @@ export default function SettingsPage() {
                 <Card variant="default">
                     <CardContent>
                         <div className="flex items-center gap-4">
-                            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary-500 to-secondary-500 flex items-center justify-center text-white text-2xl font-bold">
+                            <div className="w-16 h-16 rounded-full bg-primary-600 flex items-center justify-center text-white text-2xl font-bold">
                                 {(session?.user?.name || 'U')[0].toUpperCase()}
                             </div>
                             <div className="flex-1">
@@ -200,8 +200,8 @@ export default function SettingsPage() {
                             <button
                                 onClick={() => handleThemeChange('light')}
                                 className={`flex flex-col items-center gap-3 p-4 rounded-xl border-2 transition-all ${theme === 'light'
-                                        ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20'
-                                        : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
+                                    ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20'
+                                    : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
                                     }`}
                             >
                                 <div className="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center">
@@ -212,8 +212,8 @@ export default function SettingsPage() {
                             <button
                                 onClick={() => handleThemeChange('dark')}
                                 className={`flex flex-col items-center gap-3 p-4 rounded-xl border-2 transition-all ${theme === 'dark'
-                                        ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20'
-                                        : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
+                                    ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20'
+                                    : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
                                     }`}
                             >
                                 <div className="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center">
@@ -224,11 +224,11 @@ export default function SettingsPage() {
                             <button
                                 onClick={() => handleThemeChange('system')}
                                 className={`flex flex-col items-center gap-3 p-4 rounded-xl border-2 transition-all ${theme === 'system'
-                                        ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20'
-                                        : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
+                                    ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20'
+                                    : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
                                     }`}
                             >
-                                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-amber-100 to-gray-800 flex items-center justify-center">
+                                <div className="w-12 h-12 rounded-full bg-amber-500 flex items-center justify-center">
                                     <Monitor className="h-6 w-6 text-gray-600" />
                                 </div>
                                 <span className="text-sm font-medium text-gray-900 dark:text-white">System</span>

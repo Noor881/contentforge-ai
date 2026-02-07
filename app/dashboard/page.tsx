@@ -151,7 +151,7 @@ export default function DashboardPage() {
 
             {/* Trial Banner */}
             {session?.user?.isTrialActive && (
-                <div className="mb-8 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-xl p-6 text-white">
+                <div className="mb-8 bg-primary-600 rounded-xl p-6 text-white">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-4">
                             <Clock className="h-8 w-8" />
@@ -207,7 +207,7 @@ export default function DashboardPage() {
                         <div className="mt-3">
                             <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
                                 <div
-                                    className={`h-2 rounded-full transition-all ${isNearLimit ? 'bg-amber-500' : 'bg-gradient-to-r from-primary-600 to-secondary-600'}`}
+                                    className={`h-2 rounded-full transition-all ${isNearLimit ? 'bg-amber-500' : 'bg-primary-600'}`}
                                     style={{ width: `${Math.min(Number(usagePercentage), 100)}%` }}
                                 />
                             </div>

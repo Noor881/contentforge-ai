@@ -270,19 +270,19 @@ export default function FeaturesPageContent() {
                                     >
                                         <div className="glass-card p-4 overflow-hidden">
                                             {feature.image ? (
-                                                <div className="aspect-[4/3] relative rounded-xl overflow-hidden bg-gradient-to-br from-gray-100 to-gray-50 dark:from-gray-800 dark:to-gray-900">
+                                                <div className="aspect-[4/3] relative rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-800">
                                                     <Image
                                                         src={feature.image}
                                                         alt={feature.name}
                                                         fill
                                                         className="object-cover"
                                                     />
-                                                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
+                                                    <div className="absolute inset-0 bg-black/10" />
                                                 </div>
                                             ) : (
                                                 <div className="aspect-[4/3] rounded-xl bg-primary-600 flex items-center justify-center relative overflow-hidden">
                                                     <div className="absolute inset-0 dot-grid opacity-20" />
-                                                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
+                                                    <div className="absolute inset-0 bg-black/10" />
                                                     <div className="text-center relative z-10">
                                                         <Icon className="h-20 w-20 text-white/80 mx-auto mb-4" />
                                                         <p className="text-white/90 font-bold text-lg">{feature.name}</p>

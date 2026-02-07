@@ -120,7 +120,7 @@ export default async function AdminSubscriptionsPage() {
                         </div>
                         <p className="text-2xl font-bold text-indigo-600">{enterpriseUsers}</p>
                     </div>
-                    <div className="bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl p-4 shadow-sm">
+                    <div className="bg-green-600 rounded-xl p-4 shadow-sm">
                         <div className="flex items-center gap-2 mb-2">
                             <DollarSign className="h-5 w-5 text-white" />
                             <span className="text-sm text-green-100">MRR</span>

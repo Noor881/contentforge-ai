@@ -203,6 +203,7 @@ export default function Footer() {
                                     rel="noopener noreferrer"
                                     whileHover={{ y: -3, scale: 1.1 }}
                                     className="w-9 h-9 rounded-xl bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                                    aria-label={`Follow us on ${social.label}`}
                                 >
                                     <social.icon className="h-4 w-4" />
                                 </motion.a>

@@ -116,7 +116,7 @@ export default async function BlogPostPage({ params }: PageProps) {
 
                     {/* Author Info */}
                     <div className="flex items-center gap-4 pb-8 border-b border-gray-200 dark:border-gray-700">
-                        <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary-500 to-secondary-500 flex items-center justify-center text-white font-bold text-lg">
+                        <div className="w-12 h-12 rounded-full bg-primary-600 flex items-center justify-center text-white font-bold text-lg">
                             {post.author.charAt(0)}
                         </div>
                         <div>
@@ -201,7 +201,7 @@ export default async function BlogPostPage({ params }: PageProps) {
                 )}
 
                 {/* CTA */}
-                <div className="text-center bg-gradient-to-r from-primary-600 to-secondary-600 rounded-2xl p-8 md:p-12">
+                <div className="text-center bg-primary-600 rounded-2xl p-8 md:p-12">
                     <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
                         Ready to Try ContentForge AI?
                     </h2>

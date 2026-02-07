@@ -70,7 +70,7 @@ export default function TextToVideoGenerator({ userTier = 'pro' }: TextToVideoGe
         <Card variant="default" className="p-6">
             <CardHeader>
                 <div className="flex items-center gap-3">
-                    <div className="p-3 rounded-xl bg-gradient-to-br from-purple-500 to-pink-600">
+                    <div className="p-3 rounded-xl bg-purple-600">
                         <Video className="h-6 w-6 text-white" />
                     </div>
                     <div>
@@ -119,8 +119,8 @@ export default function TextToVideoGenerator({ userTier = 'pro' }: TextToVideoGe
                 <div className="flex items-center gap-2 text-sm">
                     <span className="text-gray-600 dark:text-gray-400">Model tier:</span>
                     <span className={`px-2 py-1 rounded-full font-medium ${userTier === 'pro' ? 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400' :
-                            userTier === 'basic' ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400' :
-                                'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-400'
+                        userTier === 'basic' ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400' :
+                            'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-400'
                         }`}>
                         {userTier.charAt(0).toUpperCase() + userTier.slice(1)}
                     </span>

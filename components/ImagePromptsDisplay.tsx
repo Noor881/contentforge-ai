@@ -39,7 +39,7 @@ export default function ImagePromptsDisplay({ prompts, className = '' }: ImagePr
     }
 
     return (
-        <div className={`bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-lg p-6 ${className}`}>
+        <div className={`bg-purple-50 dark:bg-purple-900/20 rounded-lg p-6 ${className}`}>
             <div className="flex items-center justify-between mb-4">
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                     🎨 AI Image Prompts ({prompts.length})

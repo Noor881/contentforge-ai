@@ -6,7 +6,7 @@
 
 :root {
   --font-inter: 'Inter', sans-serif;
-  
+
   /* Premium Teal + Deep Purple Palette */
   --color-primary: #14B8A6;
   --color-primary-dark: #0D9488;
@@ -14,17 +14,17 @@
   --color-accent: #8B5CF6;
   --color-accent-dark: #7C3AED;
   --color-accent-light: #A78BFA;
-  
+
   /* Neutral backgrounds */
   --color-bg: #FFFFFF;
   --color-bg-alt: #F9FAFB;
   --color-bg-subtle: #F3F4F6;
-  
+
   /* Text colors */
   --color-text-primary: #111827;
   --color-text-secondary: #6B7280;
   --color-text-tertiary: #9CA3AF;
-  
+
   /* Borders */
   --color-border: #E5E7EB;
   --color-border-light: #F3F4F6;
@@ -38,11 +38,11 @@
   --color-bg: #0A0A0F;
   --color-bg-alt: #12121A;
   --color-bg-subtle: #1A1A2E;
-  
+
   --color-text-primary: #F1F5F9;
   --color-text-secondary: #94A3B8;
   --color-text-tertiary: #64748B;
-  
+
   --color-border: rgba(255, 255, 255, 0.08);
   --color-border-light: rgba(255, 255, 255, 0.04);
 }
@@ -69,37 +69,30 @@ body {
 }
 
 /* ===================================
+   ACCESSIBILITY FOCUS STYLES
+   =================================== */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid #14B8A6;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ===================================
    ANIMATED MESH GRADIENT BACKGROUND
    =================================== */
 .mesh-gradient-bg {
   position: relative;
   overflow: hidden;
+  background-color: rgba(20, 184, 166, 0.03);
 }
 
-.mesh-gradient-bg::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: 
-    radial-gradient(ellipse 80% 50% at 20% 40%, rgba(20, 184, 166, 0.15), transparent),
-    radial-gradient(ellipse 60% 80% at 80% 20%, rgba(139, 92, 246, 0.12), transparent),
-    radial-gradient(ellipse 50% 60% at 50% 80%, rgba(249, 115, 22, 0.08), transparent);
-  animation: meshMove 12s ease-in-out infinite;
-  z-index: 0;
-}
-
-.dark .mesh-gradient-bg::before {
-  background: 
-    radial-gradient(ellipse 80% 50% at 20% 40%, rgba(20, 184, 166, 0.2), transparent),
-    radial-gradient(ellipse 60% 80% at 80% 20%, rgba(139, 92, 246, 0.18), transparent),
-    radial-gradient(ellipse 50% 60% at 50% 80%, rgba(249, 115, 22, 0.1), transparent);
-}
-
-@keyframes meshMove {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  25% { transform: translate(-3%, 3%) scale(1.02); }
-  50% { transform: translate(3%, -2%) scale(0.98); }
-  75% { transform: translate(-2%, -3%) scale(1.01); }
+.dark .mesh-gradient-bg {
+  background-color: rgba(20, 184, 166, 0.05);
 }
 
 /* ===================================
@@ -114,37 +107,38 @@ body {
   content: '';
   position: absolute;
   inset: -50%;
-  background: conic-gradient(
-    from 180deg at 50% 50%,
-    rgba(20, 184, 166, 0.3) 0deg,
-    rgba(139, 92, 246, 0.2) 60deg,
-    rgba(249, 115, 22, 0.15) 120deg,
-    rgba(20, 184, 166, 0.3) 180deg,
-    rgba(139, 92, 246, 0.2) 240deg,
-    rgba(249, 115, 22, 0.15) 300deg,
-    rgba(20, 184, 166, 0.3) 360deg
-  );
+  background: conic-gradient(from 180deg at 50% 50%,
+      rgba(20, 184, 166, 0.3) 0deg,
+      rgba(139, 92, 246, 0.2) 60deg,
+      rgba(249, 115, 22, 0.15) 120deg,
+      rgba(20, 184, 166, 0.3) 180deg,
+      rgba(139, 92, 246, 0.2) 240deg,
+      rgba(249, 115, 22, 0.15) 300deg,
+      rgba(20, 184, 166, 0.3) 360deg);
   animation: auroraRotate 20s linear infinite;
   filter: blur(80px);
   z-index: 0;
 }
 
 .dark .aurora-bg::before {
-  background: conic-gradient(
-    from 180deg at 50% 50%,
-    rgba(20, 184, 166, 0.4) 0deg,
-    rgba(139, 92, 246, 0.35) 60deg,
-    rgba(249, 115, 22, 0.2) 120deg,
-    rgba(20, 184, 166, 0.4) 180deg,
-    rgba(139, 92, 246, 0.35) 240deg,
-    rgba(249, 115, 22, 0.2) 300deg,
-    rgba(20, 184, 166, 0.4) 360deg
-  );
+  background: conic-gradient(from 180deg at 50% 50%,
+      rgba(20, 184, 166, 0.4) 0deg,
+      rgba(139, 92, 246, 0.35) 60deg,
+      rgba(249, 115, 22, 0.2) 120deg,
+      rgba(20, 184, 166, 0.4) 180deg,
+      rgba(139, 92, 246, 0.35) 240deg,
+      rgba(249, 115, 22, 0.2) 300deg,
+      rgba(20, 184, 166, 0.4) 360deg);
 }
 
 @keyframes auroraRotate {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* ===================================
@@ -178,13 +172,13 @@ body {
 
 .glass-card:hover {
   transform: translateY(-6px);
-  box-shadow: 
+  box-shadow:
     0 20px 40px rgba(0, 0, 0, 0.1),
     0 0 0 1px rgba(20, 184, 166, 0.2);
 }
 
 .dark .glass-card:hover {
-  box-shadow: 
+  box-shadow:
     0 20px 40px rgba(0, 0, 0, 0.3),
     0 0 0 1px rgba(20, 184, 166, 0.3);
 }
@@ -209,9 +203,17 @@ body {
 }
 
 @keyframes gradientShift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 /* ===================================
@@ -232,8 +234,8 @@ body {
   background: linear-gradient(135deg, #14B8A6, #8B5CF6, #F97316, #14B8A6);
   background-size: 300% 300%;
   animation: gradientShift 4s ease infinite;
-  -webkit-mask: 
-    linear-gradient(#fff 0 0) content-box, 
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
     linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
@@ -256,8 +258,15 @@ body {
 }
 
 @keyframes floatUp {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-20px); }
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-20px);
+  }
 }
 
 .float-rotate {
@@ -265,9 +274,19 @@ body {
 }
 
 @keyframes floatRotate {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  25% { transform: translateY(-15px) rotate(5deg); }
-  75% { transform: translateY(10px) rotate(-5deg); }
+
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  25% {
+    transform: translateY(-15px) rotate(5deg);
+  }
+
+  75% {
+    transform: translateY(10px) rotate(-5deg);
+  }
 }
 
 /* ===================================
@@ -279,10 +298,23 @@ body {
 }
 
 @keyframes blobMorph {
-  0%, 100% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
-  25% { border-radius: 58% 42% 75% 25% / 76% 46% 54% 24%; }
-  50% { border-radius: 50% 50% 33% 67% / 55% 27% 73% 45%; }
-  75% { border-radius: 33% 67% 58% 42% / 63% 68% 32% 37%; }
+
+  0%,
+  100% {
+    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+  }
+
+  25% {
+    border-radius: 58% 42% 75% 25% / 76% 46% 54% 24%;
+  }
+
+  50% {
+    border-radius: 50% 50% 33% 67% / 55% 27% 73% 45%;
+  }
+
+  75% {
+    border-radius: 33% 67% 58% 42% / 63% 68% 32% 37%;
+  }
 }
 
 .blob-sm {
@@ -312,19 +344,22 @@ body {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    110deg,
-    transparent 33%,
-    rgba(255, 255, 255, 0.3) 50%,
-    transparent 67%
-  );
+  background: linear-gradient(110deg,
+      transparent 33%,
+      rgba(255, 255, 255, 0.3) 50%,
+      transparent 67%);
   background-size: 200% 100%;
   animation: shimmerSlide 3s ease-in-out infinite;
 }
 
 @keyframes shimmerSlide {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
 }
 
 /* ===================================
@@ -410,7 +445,7 @@ body {
 
 .hover-lift:hover {
   transform: translateY(-6px);
-  box-shadow: 
+  box-shadow:
     0 12px 40px rgba(0, 0, 0, 0.12),
     0 0 0 1px rgba(20, 184, 166, 0.1);
 }
@@ -421,13 +456,13 @@ body {
 
 .card-hover:hover {
   transform: translateY(-8px) scale(1.02);
-  box-shadow: 
+  box-shadow:
     0 20px 50px rgba(0, 0, 0, 0.12),
     0 0 0 1px rgba(20, 184, 166, 0.2);
 }
 
 .dark .card-hover:hover {
-  box-shadow: 
+  box-shadow:
     0 20px 50px rgba(0, 0, 0, 0.4),
     0 0 0 1px rgba(20, 184, 166, 0.3);
 }
@@ -469,29 +504,30 @@ body {
    LOADING SKELETON
    =================================== */
 .skeleton {
-  background: linear-gradient(
-    90deg,
-    #f0f0f0 25%,
-    #e0e0e0 50%,
-    #f0f0f0 75%
-  );
+  background: linear-gradient(90deg,
+      #f0f0f0 25%,
+      #e0e0e0 50%,
+      #f0f0f0 75%);
   background-size: 200% 100%;
   animation: loading 1.5s infinite;
 }
 
 .dark .skeleton {
-  background: linear-gradient(
-    90deg,
-    #2d2d2d 25%,
-    #3d3d3d 50%,
-    #2d2d2d 75%
-  );
+  background: linear-gradient(90deg,
+      #2d2d2d 25%,
+      #3d3d3d 50%,
+      #2d2d2d 75%);
   background-size: 200% 100%;
 }
 
 @keyframes loading {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
 }
 
 /* ===================================
@@ -546,8 +582,13 @@ body {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 .fade-up {
@@ -559,6 +600,7 @@ body {
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -587,8 +629,15 @@ body {
 }
 
 @keyframes pulseRing {
-  0% { transform: scale(1); opacity: 1; }
-  100% { transform: scale(1.5); opacity: 0; }
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
 }
 
 /* ===================================
@@ -596,13 +645,11 @@ body {
    =================================== */
 .marquee-container {
   overflow: hidden;
-  mask-image: linear-gradient(
-    to right,
-    transparent 0%,
-    black 10%,
-    black 90%,
-    transparent 100%
-  );
+  mask-image: linear-gradient(to right,
+      transparent 0%,
+      black 10%,
+      black 90%,
+      transparent 100%);
 }
 
 .marquee-track {
@@ -612,8 +659,13 @@ body {
 }
 
 @keyframes marqueeScroll {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 /* ===================================
@@ -657,7 +709,7 @@ body {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, transparent, rgba(255,255,255,0.2), transparent);
+  background: linear-gradient(135deg, transparent, rgba(255, 255, 255, 0.2), transparent);
   transform: translateX(-100%);
   transition: transform 0.5s ease;
 }
@@ -675,7 +727,7 @@ body {
    GRID PATTERN BACKGROUND  
    =================================== */
 .bg-grid-pattern {
-  background-image: 
+  background-image:
     linear-gradient(rgba(20, 184, 166, 0.05) 1px, transparent 1px),
     linear-gradient(90deg, rgba(20, 184, 166, 0.05) 1px, transparent 1px);
   background-size: 60px 60px;
@@ -688,6 +740,7 @@ body {
   .text-responsive-xl {
     font-size: 2.25rem;
   }
+
   .text-responsive-lg {
     font-size: 1.5rem;
   }
@@ -727,8 +780,15 @@ body {
 }
 
 @keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
 }
 
 /* ===================================

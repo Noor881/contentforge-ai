@@ -437,7 +437,7 @@ function AdminUsersContent() {
                                             {/* User Info */}
                                             <td className="px-4 py-4">
                                                 <div className="flex items-center gap-3">
-                                                    <div className="h-10 w-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-semibold">
+                                                    <div className="h-10 w-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-semibold">
                                                         {(user.name || user.email)[0].toUpperCase()}
                                                     </div>
                                                     <div>
@@ -638,7 +638,7 @@ function AdminUsersContent() {
                         <div className="p-6 space-y-6">
                             {/* Profile Section */}
                             <div className="flex items-center gap-4">
-                                <div className="h-16 w-16 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white text-2xl font-bold">
+                                <div className="h-16 w-16 rounded-full bg-blue-600 flex items-center justify-center text-white text-2xl font-bold">
                                     {(selectedUser.name || selectedUser.email)[0].toUpperCase()}
                                 </div>
                                 <div>
@@ -726,7 +726,7 @@ function AdminUsersContent() {
                             {/* Actions */}
                             <div className="space-y-4 pt-4 border-t border-gray-200 dark:border-gray-700">
                                 {/* Plan Assignment */}
-                                <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 p-4 rounded-lg">
+                                <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
                                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                         Assign Plan
                                     </label>
@@ -750,7 +750,7 @@ function AdminUsersContent() {
                                 </div>
 
                                 {/* Extend Trial */}
-                                <div className="bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 p-4 rounded-lg">
+                                <div className="bg-amber-50 dark:bg-amber-900/20 p-4 rounded-lg">
                                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                         Extend Trial
                                     </label>

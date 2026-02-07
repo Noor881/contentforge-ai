@@ -54,8 +54,8 @@ export default function PricingCards() {
                     <button
                         onClick={() => setBillingCycle('monthly')}
                         className={`px-6 py-2 rounded-md font-medium transition-all ${billingCycle === 'monthly'
-                                ? 'bg-primary-600 text-white'
-                                : 'text-gray-600 dark:text-gray-400'
+                            ? 'bg-primary-600 text-white'
+                            : 'text-gray-600 dark:text-gray-400'
                             }`}
                     >
                         Monthly
@@ -63,8 +63,8 @@ export default function PricingCards() {
                     <button
                         onClick={() => setBillingCycle('yearly')}
                         className={`px-6 py-2 rounded-md font-medium transition-all ${billingCycle === 'yearly'
-                                ? 'bg-primary-600 text-white'
-                                : 'text-gray-600 dark:text-gray-400'
+                            ? 'bg-primary-600 text-white'
+                            : 'text-gray-600 dark:text-gray-400'
                             }`}
                     >
                         Yearly
@@ -91,15 +91,15 @@ export default function PricingCards() {
                     return (
                         <Card
                             key={tier.id}
-                            variant={tier.popular ? 'gradient' : 'default'}
+                            variant={tier.popular ? 'bordered' : 'default'}
                             className={`relative ${tier.popular
-                                    ? 'border-2 border-primary-500 shadow-2xl lg:scale-105 z-10'
-                                    : ''
+                                ? 'border-2 border-primary-500 shadow-2xl lg:scale-105 z-10'
+                                : ''
                                 }`}
                         >
                             {tier.popular && (
                                 <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                                    <span className="inline-flex items-center gap-1 bg-gradient-to-r from-primary-600 to-secondary-600 text-white px-4 py-1 rounded-full text-sm font-semibold">
+                                    <span className="inline-flex items-center gap-1 bg-primary-600 text-white px-4 py-1 rounded-full text-sm font-semibold">
                                         <Zap className="h-4 w-4" />
                                         Most Popular
                                     </span>
