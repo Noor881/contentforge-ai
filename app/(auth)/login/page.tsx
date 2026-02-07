@@ -50,7 +50,7 @@ function LoginForm() {
                 <div className="text-center mb-8">
                     <Link href="/" className="inline-flex items-center gap-2">
                         <Sparkles className="h-10 w-10 text-primary-600" />
-                        <span className="text-3xl font-bold gradient-text font-display">
+                        <span className="text-3xl font-bold text-primary-600 dark:text-primary-400 font-display">
                             ContentForge AI
                         </span>
                     </Link>

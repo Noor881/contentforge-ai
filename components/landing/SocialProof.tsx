@@ -13,7 +13,7 @@ const testimonials = [
         company: 'TechCorp',
         content: 'ContentForge AI has transformed our content strategy. We\'ve cut content creation time by 70% while maintaining quality. The blog generator alone saves us 15 hours per week. Absolutely game-changing for our team.',
         rating: 5,
-        avatar: 'https://i.pravatar.cc/150?img=32',
+        avatar: '/images/avatar-sarah.png',
         featured: true,
     },
     {
@@ -22,7 +22,7 @@ const testimonials = [
         company: 'GrowthAgency',
         content: 'The social media content generator is incredible. I create a week\'s worth of posts in 30 minutes. My engagement has increased by 300%.',
         rating: 5,
-        avatar: 'https://i.pravatar.cc/150?img=11',
+        avatar: '/images/avatar-michael.png',
         featured: false,
     },
     {
@@ -31,7 +31,7 @@ const testimonials = [
         company: 'StartupHub',
         content: 'As a startup founder, I wear many hats. ContentForge helps me maintain a professional online presence without hiring a content team. It pays for itself 10x over.',
         rating: 5,
-        avatar: 'https://i.pravatar.cc/150?img=26',
+        avatar: '/images/avatar-emily.png',
         featured: false,
     },
     {
@@ -40,7 +40,7 @@ const testimonials = [
         company: 'Independent',
         content: 'I was skeptical about AI writing tools, but ContentForge is different. It helps me brainstorm and draft faster, giving me more time for editing and client work.',
         rating: 5,
-        avatar: 'https://i.pravatar.cc/150?img=53',
+        avatar: '/images/avatar-david.png',
         featured: false,
     },
     {
@@ -49,7 +49,7 @@ const testimonials = [
         company: 'E-commerce Plus',
         content: 'The email template generator has doubled our open rates. The AI understands our brand voice perfectly. Worth every penny!',
         rating: 5,
-        avatar: 'https://i.pravatar.cc/150?img=44',
+        avatar: '/images/avatar-lisa.png',
         featured: false,
     },
     {
@@ -58,7 +58,7 @@ const testimonials = [
         company: 'YouTube',
         content: 'Writing scripts used to take me hours. Now I generate professional scripts in minutes and spend more time on production. My channel has grown 5x since I started using ContentForge.',
         rating: 5,
-        avatar: 'https://i.pravatar.cc/150?img=59',
+        avatar: '/images/avatar-david.png',
         featured: false,
     },
 ]

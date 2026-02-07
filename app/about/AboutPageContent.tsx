@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { Heart, Lightbulb, Shield, Users, Sparkles, Globe, Zap, Target, ArrowRight } from 'lucide-react'
 import Link from 'next/link'
+import Image from 'next/image'
 import Button from '@/components/ui/Button'
 
 const values = [
@@ -10,25 +11,25 @@ const values = [
         icon: Heart,
         title: 'User-First Design',
         description: 'Every feature we build starts with a real user need. We obsess over making AI accessible to everyone, not just tech experts.',
-        gradient: 'from-rose-500 to-pink-500',
+        accent: 'bg-rose-600',
     },
     {
         icon: Lightbulb,
         title: 'Continuous Innovation',
         description: 'We push the boundaries of what AI can do for content creation. Our team ships improvements weekly to stay ahead of the curve.',
-        gradient: 'from-amber-500 to-yellow-400',
+        accent: 'bg-amber-600',
     },
     {
         icon: Shield,
         title: 'Trust & Transparency',
         description: 'Your content and data are yours. We never use your content for training, and we are transparent about how our AI works.',
-        gradient: 'from-blue-500 to-indigo-500',
+        accent: 'bg-blue-600',
     },
     {
         icon: Users,
         title: 'Community Driven',
         description: 'Our roadmap is shaped by our community. We listen, iterate, and build features that our users actually need.',
-        gradient: 'from-green-500 to-emerald-400',
+        accent: 'bg-green-600',
     },
 ]
 
@@ -40,10 +41,10 @@ const stats = [
 ]
 
 const team = [
-    { name: 'Alex Rivera', role: 'Founder & CEO', initials: 'AR', gradient: 'from-teal-500 to-cyan-400', bio: 'Former Google AI researcher with a passion for making technology accessible.' },
-    { name: 'Sarah Chen', role: 'Head of Content', initials: 'SC', gradient: 'from-purple-500 to-pink-500', bio: 'Content strategist who has led content teams at three Fortune 500 companies.' },
-    { name: 'Marcus Johnson', role: 'CTO', initials: 'MJ', gradient: 'from-blue-500 to-indigo-500', bio: 'Full-stack engineer with 12+ years building scalable AI-powered platforms.' },
-    { name: 'Emily Park', role: 'Head of Product', initials: 'EP', gradient: 'from-amber-500 to-orange-500', bio: 'Product lead who previously built tools used by millions of creators.' },
+    { name: 'Alex Rivera', role: 'Founder & CEO', avatar: '/images/avatar-sarah.png', bio: 'Former Google AI researcher with a passion for making technology accessible.' },
+    { name: 'Sarah Chen', role: 'Head of Content', avatar: '/images/avatar-emily.png', bio: 'Content strategist who has led content teams at three Fortune 500 companies.' },
+    { name: 'Marcus Johnson', role: 'CTO', avatar: '/images/avatar-michael.png', bio: 'Full-stack engineer with 12+ years building scalable AI-powered platforms.' },
+    { name: 'Emily Park', role: 'Head of Product', avatar: '/images/avatar-lisa.png', bio: 'Product lead who previously built tools used by millions of creators.' },
 ]
 
 export default function AboutPageContent() {
@@ -52,17 +53,6 @@ export default function AboutPageContent() {
             {/* Hero Section */}
             <section className="relative py-24 lg:py-32 mesh-gradient-bg grain-overlay">
                 <div className="absolute inset-0 dot-grid" />
-
-                <motion.div
-                    animate={{ y: [0, -25, 0], scale: [1, 1.1, 1] }}
-                    transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
-                    className="absolute -top-20 -right-20 w-80 h-80 bg-primary-500/15 rounded-full blur-3xl"
-                />
-                <motion.div
-                    animate={{ y: [0, 20, 0] }}
-                    transition={{ duration: 8, delay: 2, repeat: Infinity, ease: 'easeInOut' }}
-                    className="absolute -bottom-20 -left-20 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"
-                />
 
                 <div className="container-custom relative z-10 text-center max-w-4xl mx-auto">
                     <motion.div
@@ -81,7 +71,7 @@ export default function AboutPageContent() {
                         className="text-responsive-xl font-display text-gray-900 dark:text-white mb-6"
                     >
                         Democratizing Content Creation{' '}
-                        <span className="gradient-text">with AI</span>
+                        <span className="text-primary-600 dark:text-primary-400">with AI</span>
                     </motion.h1>
 
                     <motion.p
@@ -112,7 +102,7 @@ export default function AboutPageContent() {
                                 className="text-center glass-card py-8 px-4"
                             >
                                 <stat.icon className="h-6 w-6 text-primary-500 mx-auto mb-3" />
-                                <div className="text-3xl lg:text-4xl font-extrabold gradient-text mb-1">
+                                <div className="text-3xl lg:text-4xl font-extrabold text-primary-600 dark:text-primary-400 mb-1">
                                     {stat.value}
                                 </div>
                                 <div className="text-sm text-gray-600 dark:text-gray-400 font-medium">
@@ -134,7 +124,7 @@ export default function AboutPageContent() {
                             viewport={{ once: true }}
                         >
                             <h2 className="text-responsive-lg font-display text-gray-900 dark:text-white mb-6">
-                                Our <span className="gradient-text-static">Mission</span>
+                                Our <span className="text-primary-600 dark:text-primary-400">Mission</span>
                             </h2>
                             <p className="text-lg text-gray-600 dark:text-gray-400 leading-relaxed mb-6">
                                 ContentForge AI was born from a simple observation: creating quality content
@@ -160,15 +150,20 @@ export default function AboutPageContent() {
                             viewport={{ once: true }}
                         >
                             <div className="glass-card p-8 relative overflow-hidden">
-                                <div className="absolute inset-0 animated-gradient opacity-5" />
                                 <div className="relative z-10">
                                     <blockquote className="text-2xl font-bold text-gray-900 dark:text-white leading-relaxed mb-6 italic">
                                         &ldquo;Content is the voice of your brand. We&apos;re here to make sure
                                         every business has a powerful one.&rdquo;
                                     </blockquote>
                                     <div className="flex items-center gap-3">
-                                        <div className="w-12 h-12 rounded-full bg-gradient-to-br from-teal-500 to-cyan-400 flex items-center justify-center text-white font-bold">
-                                            AR
+                                        <div className="w-12 h-12 rounded-full overflow-hidden ring-2 ring-primary-200 dark:ring-primary-800">
+                                            <Image
+                                                src="/images/avatar-sarah.png"
+                                                alt="Alex Rivera"
+                                                width={48}
+                                                height={48}
+                                                className="w-full h-full object-cover"
+                                            />
                                         </div>
                                         <div>
                                             <div className="font-bold text-gray-900 dark:text-white">Alex Rivera</div>
@@ -206,7 +201,7 @@ export default function AboutPageContent() {
                             transition={{ delay: 0.1 }}
                             className="text-responsive-lg font-display text-gray-900 dark:text-white mb-5"
                         >
-                            Our Core <span className="gradient-text">Values</span>
+                            Our Core <span className="text-primary-600 dark:text-primary-400">Values</span>
                         </motion.h2>
                     </div>
 
@@ -221,9 +216,9 @@ export default function AboutPageContent() {
                                     viewport={{ once: true }}
                                     transition={{ delay: i * 0.1 }}
                                     whileHover={{ y: -5 }}
-                                    className="glass-card p-6 group"
+                                    className="glass-card p-6 group relative overflow-hidden"
                                 >
-                                    <div className={`inline-flex rounded-xl p-3 bg-gradient-to-br ${value.gradient} shadow-lg mb-4`}>
+                                    <div className={`inline-flex rounded-xl p-3 ${value.accent} shadow-lg mb-4`}>
                                         <Icon className="h-6 w-6 text-white" />
                                     </div>
                                     <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">
@@ -232,7 +227,7 @@ export default function AboutPageContent() {
                                     <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
                                         {value.description}
                                     </p>
-                                    <div className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${value.gradient} transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 rounded-b-2xl`} />
+                                    <div className={`absolute bottom-0 left-0 right-0 h-1 ${value.accent} transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 rounded-b-2xl`} />
                                 </motion.div>
                             )
                         })}
@@ -261,7 +256,7 @@ export default function AboutPageContent() {
                             transition={{ delay: 0.1 }}
                             className="text-responsive-lg font-display text-gray-900 dark:text-white mb-5"
                         >
-                            Meet Our <span className="gradient-text">Team</span>
+                            Meet Our <span className="text-primary-600 dark:text-primary-400">Team</span>
                         </motion.h2>
                     </div>
 
@@ -276,8 +271,14 @@ export default function AboutPageContent() {
                                 whileHover={{ y: -8 }}
                                 className="glass-card p-6 text-center"
                             >
-                                <div className={`w-20 h-20 rounded-full bg-gradient-to-br ${member.gradient} flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4 shadow-lg`}>
-                                    {member.initials}
+                                <div className="w-20 h-20 rounded-full overflow-hidden mx-auto mb-4 shadow-lg ring-4 ring-gray-100 dark:ring-gray-800">
+                                    <Image
+                                        src={member.avatar}
+                                        alt={member.name}
+                                        width={80}
+                                        height={80}
+                                        className="w-full h-full object-cover"
+                                    />
                                 </div>
                                 <h3 className="font-bold text-gray-900 dark:text-white mb-1">
                                     {member.name}
@@ -303,7 +304,7 @@ export default function AboutPageContent() {
                         viewport={{ once: true }}
                         className="relative overflow-hidden rounded-3xl"
                     >
-                        <div className="absolute inset-0 animated-gradient" />
+                        <div className="absolute inset-0 bg-primary-600" />
                         <div className="absolute inset-0 grain-overlay" />
 
                         <div className="relative text-center px-8 py-16 lg:px-16 lg:py-24 z-10">

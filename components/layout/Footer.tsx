@@ -64,8 +64,8 @@ export default function Footer() {
 
     return (
         <footer className="relative bg-gray-50 dark:bg-gray-950 border-t border-gray-200/50 dark:border-gray-800/50">
-            {/* Subtle top gradient accent */}
-            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary-500/40 to-transparent" />
+            {/* Subtle top accent */}
+            <div className="absolute top-0 left-0 right-0 h-px bg-primary-500/30" />
 
             <div className="container-custom py-16">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-10">
@@ -73,7 +73,7 @@ export default function Footer() {
                     <div className="lg:col-span-2">
                         <Link href="/" className="flex items-center space-x-2 mb-4 group">
                             <Sparkles className="h-7 w-7 text-primary-600 group-hover:text-primary-500 transition-colors" />
-                            <span className="text-xl font-extrabold gradient-text font-display">
+                            <span className="text-xl font-extrabold text-primary-600 dark:text-primary-400 font-display">
                                 ContentForge AI
                             </span>
                         </Link>
@@ -97,7 +97,7 @@ export default function Footer() {
                                     className="flex-1"
                                 />
                                 <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
-                                    <Button type="submit" size="sm" isLoading={isLoading} className="animated-gradient text-white border-none">
+                                    <Button type="submit" size="sm" isLoading={isLoading} className="bg-primary-600 hover:bg-primary-700 text-white border-none">
                                         <ArrowRight className="h-4 w-4" />
                                     </Button>
                                 </motion.div>

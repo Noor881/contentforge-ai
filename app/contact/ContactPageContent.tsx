@@ -96,7 +96,7 @@ export default function ContactPageContent() {
                         transition={{ delay: 0.1 }}
                         className="text-responsive-xl font-display text-gray-900 dark:text-white mb-6"
                     >
-                        Contact <span className="gradient-text">Us</span>
+                        Contact <span className="text-primary-600 dark:text-primary-400">Us</span>
                     </motion.h1>
 
                     <motion.p
@@ -127,7 +127,7 @@ export default function ContactPageContent() {
                                     whileHover={{ y: -5 }}
                                     className="glass-card p-6 text-center group"
                                 >
-                                    <div className={`inline-flex rounded-xl p-3.5 bg-gradient-to-br ${info.gradient} shadow-lg mb-4`}>
+                                    <div className="inline-flex rounded-xl p-3.5 bg-primary-600 shadow-lg mb-4">
                                         <Icon className="h-6 w-6 text-white" />
                                     </div>
                                     <h3 className="font-bold text-gray-900 dark:text-white mb-1">
@@ -233,7 +233,7 @@ export default function ContactPageContent() {
                                         <Button
                                             type="submit"
                                             isLoading={isLoading}
-                                            className="w-full animated-gradient text-white border-none shadow-lg btn-glow text-lg py-3"
+                                            className="w-full bg-primary-600 hover:bg-primary-700 text-white border-none shadow-lg text-lg py-3"
                                             size="lg"
                                         >
                                             <Send className="mr-2 h-5 w-5" />
@@ -253,7 +253,7 @@ export default function ContactPageContent() {
                         >
                             <div className="glass-card p-6">
                                 <div className="flex items-center gap-3 mb-4">
-                                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-green-500 to-emerald-400 flex items-center justify-center">
+                                    <div className="w-10 h-10 rounded-xl bg-green-600 flex items-center justify-center">
                                         <Clock className="h-5 w-5 text-white" />
                                     </div>
                                     <h3 className="font-bold text-gray-900 dark:text-white">Response Time</h3>
@@ -267,7 +267,7 @@ export default function ContactPageContent() {
 
                             <div className="glass-card p-6">
                                 <div className="flex items-center gap-3 mb-4">
-                                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-orange-400 flex items-center justify-center">
+                                    <div className="w-10 h-10 rounded-xl bg-amber-600 flex items-center justify-center">
                                         <MessageSquare className="h-5 w-5 text-white" />
                                     </div>
                                     <h3 className="font-bold text-gray-900 dark:text-white">FAQ</h3>
@@ -275,20 +275,20 @@ export default function ContactPageContent() {
                                 <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
                                     Many common questions are already answered in our FAQ section. Check there first for faster answers.
                                 </p>
-                                <a href="/#faq" className="inline-flex items-center gap-1 text-primary-600 dark:text-primary-400 font-semibold text-sm animated-underline">
+                                <a href="/#faq" className="inline-flex items-center gap-1 text-primary-600 dark:text-primary-400 font-semibold text-sm hover:underline">
                                     View FAQ <ArrowRight className="h-3.5 w-3.5" />
                                 </a>
                             </div>
 
                             <div className="glass-card p-6 relative overflow-hidden">
-                                <div className="absolute inset-0 animated-gradient opacity-5" />
+                                <div className="absolute inset-0 bg-primary-600/5" />
                                 <div className="relative z-10">
                                     <h3 className="font-bold text-gray-900 dark:text-white mb-2">Enterprise?</h3>
                                     <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
                                         Need custom solutions, dedicated support, or white-label options?
                                         Let&apos;s discuss your needs.
                                     </p>
-                                    <a href="mailto:enterprise@contentforge.ai" className="inline-flex items-center gap-1 text-primary-600 dark:text-primary-400 font-semibold text-sm animated-underline">
+                                    <a href="mailto:enterprise@contentforge.ai" className="inline-flex items-center gap-1 text-primary-600 dark:text-primary-400 font-semibold text-sm hover:underline">
                                         enterprise@contentforge.ai <ArrowRight className="h-3.5 w-3.5" />
                                     </a>
                                 </div>

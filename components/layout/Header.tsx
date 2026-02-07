@@ -27,9 +27,9 @@ export default function Header() {
                     <Link href="/" className="flex items-center space-x-2.5 group">
                         <div className="relative">
                             <Sparkles className="h-8 w-8 text-primary-600 group-hover:text-primary-500 transition-colors" />
-                            <div className="absolute -inset-1 bg-gradient-to-r from-primary-600 to-purple-600 rounded-full opacity-0 group-hover:opacity-30 blur transition-opacity duration-300" />
+                            <div className="absolute -inset-1 bg-primary-600 rounded-full opacity-0 group-hover:opacity-30 blur transition-opacity duration-300" />
                         </div>
-                        <span className="text-xl font-extrabold gradient-text font-display tracking-tight">
+                        <span className="text-xl font-extrabold text-primary-600 dark:text-primary-400 font-display tracking-tight">
                             ContentForge AI
                         </span>
                     </Link>
@@ -40,7 +40,7 @@ export default function Header() {
                             <Link
                                 key={item.name}
                                 href={item.href}
-                                className="relative px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors rounded-lg hover:bg-gray-50/50 dark:hover:bg-gray-800/50 animated-underline"
+                                className="relative px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors rounded-lg hover:bg-gray-50/50 dark:hover:bg-gray-800/50"
                             >
                                 {item.name}
                             </Link>
@@ -52,7 +52,7 @@ export default function Header() {
                         {session ? (
                             <Link href="/dashboard">
                                 <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
-                                    <Button size="sm" className="animated-gradient text-white border-none btn-glow font-semibold">
+                                    <Button size="sm" className="bg-primary-600 hover:bg-primary-700 text-white border-none font-semibold">
                                         Dashboard
                                         <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
                                     </Button>
@@ -67,7 +67,7 @@ export default function Header() {
                                 </Link>
                                 <Link href="/signup">
                                     <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
-                                        <Button size="sm" className="animated-gradient text-white border-none btn-glow font-semibold">
+                                        <Button size="sm" className="bg-primary-600 hover:bg-primary-700 text-white border-none font-semibold">
                                             Start Free Trial
                                         </Button>
                                     </motion.div>
@@ -109,7 +109,7 @@ export default function Header() {
                                 <div className="pt-4 space-y-2 px-1">
                                     {session ? (
                                         <Link href="/dashboard" onClick={() => setIsMenuOpen(false)}>
-                                            <Button size="sm" className="w-full animated-gradient text-white border-none">
+                                            <Button size="sm" className="w-full bg-primary-600 hover:bg-primary-700 text-white border-none">
                                                 Dashboard
                                             </Button>
                                         </Link>
@@ -121,7 +121,7 @@ export default function Header() {
                                                 </Button>
                                             </Link>
                                             <Link href="/signup" onClick={() => setIsMenuOpen(false)}>
-                                                <Button size="sm" className="w-full animated-gradient text-white border-none">
+                                                <Button size="sm" className="w-full bg-primary-600 hover:bg-primary-700 text-white border-none">
                                                     Start Free Trial
                                                 </Button>
                                             </Link>

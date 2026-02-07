@@ -154,7 +154,7 @@ export default function FeaturesPageContent() {
                             className="text-responsive-xl font-display text-gray-900 dark:text-white mb-6"
                         >
                             Powerful Features for{' '}
-                            <span className="gradient-text">Every Content Need</span>
+                            <span className="text-primary-600 dark:text-primary-400">Every Content Need</span>
                         </motion.h1>
 
                         <motion.p
@@ -184,7 +184,7 @@ export default function FeaturesPageContent() {
                                     whileHover={{ y: -3 }}
                                     className="glass-card px-6 py-4 flex items-center gap-3"
                                 >
-                                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-500 to-teal-400 flex items-center justify-center">
+                                    <div className="w-10 h-10 rounded-xl bg-primary-600 flex items-center justify-center">
                                         <stat.icon className="h-5 w-5 text-white" />
                                     </div>
                                     <div className="text-left">
@@ -216,7 +216,7 @@ export default function FeaturesPageContent() {
                                 >
                                     {/* Text Content */}
                                     <div className={isReversed ? 'md:order-2' : ''}>
-                                        <div className={`inline-flex rounded-xl p-3 bg-gradient-to-br ${feature.gradient} mb-6 shadow-lg`}>
+                                        <div className="inline-flex rounded-xl p-3 bg-primary-600 mb-6 shadow-lg">
                                             <Icon className="h-7 w-7 text-white" />
                                         </div>
                                         <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white mb-4 tracking-tight">
@@ -239,7 +239,7 @@ export default function FeaturesPageContent() {
                                                     transition={{ delay: i * 0.1 }}
                                                     className="flex items-start gap-3"
                                                 >
-                                                    <div className={`flex-shrink-0 w-5 h-5 rounded-full bg-gradient-to-br ${feature.gradient} flex items-center justify-center mt-0.5`}>
+                                                    <div className="flex-shrink-0 w-5 h-5 rounded-full bg-primary-600 flex items-center justify-center mt-0.5">
                                                         <Check className="h-3 w-3 text-white" strokeWidth={3} />
                                                     </div>
                                                     <span className="text-gray-700 dark:text-gray-300 text-sm">
@@ -280,7 +280,7 @@ export default function FeaturesPageContent() {
                                                     <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
                                                 </div>
                                             ) : (
-                                                <div className={`aspect-[4/3] rounded-xl bg-gradient-to-br ${feature.gradient} flex items-center justify-center relative overflow-hidden`}>
+                                                <div className="aspect-[4/3] rounded-xl bg-primary-600 flex items-center justify-center relative overflow-hidden">
                                                     <div className="absolute inset-0 dot-grid opacity-20" />
                                                     <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
                                                     <div className="text-center relative z-10">
@@ -307,7 +307,7 @@ export default function FeaturesPageContent() {
                         viewport={{ once: true }}
                         className="relative overflow-hidden rounded-3xl"
                     >
-                        <div className="absolute inset-0 animated-gradient" />
+                        <div className="absolute inset-0 bg-primary-600" />
                         <div className="absolute inset-0 grain-overlay" />
 
                         <div className="relative text-center px-8 py-16 lg:px-16 lg:py-24 z-10">

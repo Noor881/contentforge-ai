@@ -1,6 +1,5 @@
 'use client'
 
-import Image from 'next/image'
 import {
     Pencil,
     MessageSquare,
@@ -25,117 +24,91 @@ const features = [
         icon: Pencil,
         title: 'Blog Post Generator',
         description: 'Create SEO-optimized blog posts in any tone and length. Perfect for content marketing.',
-        gradient: 'from-teal-500 to-cyan-400',
-        glow: 'shadow-teal-500/20',
-        image: '/images/feature-blog.png',
+        accent: 'bg-teal-600',
         link: '/dashboard/create/blog',
     },
     {
         icon: MessageSquare,
         title: 'Social Media Content',
         description: 'Generate engaging posts for Twitter, LinkedIn, Instagram, and Facebook.',
-        gradient: 'from-blue-500 to-indigo-500',
-        glow: 'shadow-blue-500/20',
-        image: '/images/feature-social.png',
+        accent: 'bg-blue-600',
         link: '/dashboard/create/social',
     },
     {
         icon: Mail,
         title: 'Email Templates',
         description: 'Craft compelling marketing emails, newsletters, and campaigns that convert.',
-        gradient: 'from-rose-500 to-pink-500',
-        glow: 'shadow-rose-500/20',
-        image: '/images/feature-email.png',
+        accent: 'bg-rose-600',
         link: '/dashboard/create/email',
     },
     {
         icon: Video,
         title: 'Video Scripts',
         description: 'Write professional video scripts with hooks, timing cues, and calls-to-action.',
-        gradient: 'from-red-500 to-orange-500',
-        glow: 'shadow-red-500/20',
-        image: '/images/feature-video.png',
+        accent: 'bg-red-600',
         link: '/dashboard/create/video',
     },
     {
         icon: Target,
         title: 'Ad Copy',
         description: 'Create high-converting ad copy for Google, Facebook, and Instagram ads.',
-        gradient: 'from-amber-500 to-yellow-400',
-        glow: 'shadow-amber-500/20',
-        image: '/images/feature-ad.png',
+        accent: 'bg-amber-600',
         link: '/dashboard/create/ad',
     },
     {
         icon: Search,
         title: 'SEO Meta Descriptions',
         description: 'Generate keyword-optimized meta descriptions that boost your search rankings.',
-        gradient: 'from-green-500 to-emerald-400',
-        glow: 'shadow-green-500/20',
-        image: null,
+        accent: 'bg-green-600',
         link: '/dashboard/create/seo',
     },
     {
         icon: FileText,
         title: 'Resume Builder',
         description: 'Build ATS-friendly, professional resumes optimized for your target job role.',
-        gradient: 'from-indigo-500 to-violet-500',
-        glow: 'shadow-indigo-500/20',
-        image: null,
+        accent: 'bg-indigo-600',
         link: '/dashboard/create/resume',
     },
     {
         icon: FileText,
         title: 'Cover Letter Generator',
         description: 'Write personalized cover letters that highlight your skills and experience.',
-        gradient: 'from-blue-600 to-sky-500',
-        glow: 'shadow-blue-600/20',
-        image: null,
+        accent: 'bg-sky-600',
         link: '/dashboard/create/coverletter',
     },
     {
         icon: Music,
         title: 'Song Lyrics Creator',
         description: 'Generate original song lyrics for any genre, theme, and mood.',
-        gradient: 'from-pink-500 to-fuchsia-500',
-        glow: 'shadow-pink-500/20',
-        image: null,
+        accent: 'bg-pink-600',
         link: '/dashboard/create/lyrics',
     },
     {
         icon: Mic,
         title: 'Podcast Script Writer',
         description: 'Create engaging podcast scripts with timestamps, intros, and show notes.',
-        gradient: 'from-orange-500 to-red-500',
-        glow: 'shadow-orange-500/20',
-        image: null,
+        accent: 'bg-orange-600',
         link: '/dashboard/create/podcast',
     },
     {
         icon: ShoppingBag,
         title: 'Product Descriptions',
         description: 'Write compelling product descriptions that drive sales and conversions.',
-        gradient: 'from-yellow-500 to-amber-500',
-        glow: 'shadow-yellow-500/20',
-        image: null,
+        accent: 'bg-yellow-600',
         link: '/dashboard/create/product',
     },
     {
         icon: Share2,
         title: 'LinkedIn Posts',
         description: 'Craft professional LinkedIn content that builds your personal brand.',
-        gradient: 'from-sky-600 to-blue-700',
-        glow: 'shadow-sky-600/20',
-        image: null,
+        accent: 'bg-blue-700',
         link: '/dashboard/create/linkedin',
     },
     {
         icon: Feather,
         title: 'Poetry Generator',
         description: 'Create beautiful, creative poems in various styles and formats.',
-        gradient: 'from-purple-500 to-pink-500',
-        glow: 'shadow-purple-500/20',
-        image: null,
+        accent: 'bg-purple-600',
         link: '/dashboard/create/poetry',
     },
 ]
@@ -185,29 +158,14 @@ function FeatureCard({ feature, index }: { feature: typeof features[0]; index: n
             >
                 <Link href={feature.link}>
                     <div className="group relative h-full glass-card p-6 cursor-pointer overflow-hidden">
-                        {/* Animated gradient border on hover */}
-                        <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                            <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${feature.gradient} opacity-10`} />
-                        </div>
+                        {/* Subtle hover background */}
+                        <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gray-50 dark:bg-gray-800/30" />
 
                         {/* Top accent line */}
-                        <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${feature.gradient} rounded-t-2xl transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500`} />
+                        <div className={`absolute top-0 left-0 right-0 h-1 ${feature.accent} rounded-t-2xl transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500`} />
 
-                        {/* Feature image - shown for first 5 that have real images */}
-                        {feature.image && (
-                            <div className="relative w-full h-36 mb-4 rounded-xl overflow-hidden bg-gradient-to-br from-gray-100 to-gray-50 dark:from-gray-800 dark:to-gray-900">
-                                <Image
-                                    src={feature.image}
-                                    alt={feature.title}
-                                    fill
-                                    className="object-cover transition-transform duration-700 group-hover:scale-110"
-                                />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
-                            </div>
-                        )}
-
-                        {/* Icon with gradient background */}
-                        <div className={`relative inline-flex rounded-xl p-3.5 bg-gradient-to-br ${feature.gradient} shadow-lg ${feature.glow} shadow-lg mb-4 group-hover:shadow-xl transition-shadow duration-300`}>
+                        {/* Icon with solid background */}
+                        <div className={`relative inline-flex rounded-xl p-3.5 ${feature.accent} shadow-lg mb-4 group-hover:shadow-xl transition-shadow duration-300`}>
                             <Icon className="h-6 w-6 text-white" />
 
                             {/* Shimmer effect on hover */}
@@ -243,18 +201,6 @@ export default function Features() {
             <div className="absolute inset-0 bg-gray-50/50 dark:bg-gray-950/50" />
             <div className="absolute inset-0 dot-grid opacity-50" />
 
-            {/* Floating blobs */}
-            <motion.div
-                animate={{ y: [0, -25, 0], scale: [1, 1.1, 1] }}
-                transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
-                className="absolute -top-32 -right-32 w-96 h-96 bg-primary-500/10 rounded-full blur-3xl"
-            />
-            <motion.div
-                animate={{ y: [0, 20, 0], scale: [1, 1.15, 1] }}
-                transition={{ duration: 12, delay: 3, repeat: Infinity, ease: 'easeInOut' }}
-                className="absolute -bottom-32 -left-32 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"
-            />
-
             <div className="container-custom relative z-10">
                 {/* Section Header */}
                 <div className="text-center max-w-3xl mx-auto mb-20">
@@ -277,7 +223,7 @@ export default function Features() {
                         className="text-responsive-lg font-display text-gray-900 dark:text-white mb-5"
                     >
                         Everything You Need to{' '}
-                        <span className="gradient-text">Scale Your Content</span>
+                        <span className="text-primary-600 dark:text-primary-400">Scale Your Content</span>
                     </motion.h2>
 
                     <motion.p
@@ -310,7 +256,7 @@ export default function Features() {
                     <Link href="/features">
                         <motion.span
                             whileHover={{ scale: 1.05 }}
-                            className="inline-flex items-center gap-2 text-primary-600 dark:text-primary-400 font-semibold text-lg animated-underline cursor-pointer"
+                            className="inline-flex items-center gap-2 text-primary-600 dark:text-primary-400 font-semibold text-lg cursor-pointer hover:underline"
                         >
                             Explore all features in detail
                             <ArrowRight className="h-5 w-5" />

@@ -16,17 +16,11 @@ export default function CTASection() {
                     transition={{ duration: 0.8 }}
                     className="relative overflow-hidden rounded-3xl"
                 >
-                    {/* Animated gradient background */}
-                    <div className="absolute inset-0 animated-gradient" />
-
-                    {/* Aurora overlay */}
-                    <div className="absolute inset-0 aurora-bg opacity-50" />
+                    {/* Solid background */}
+                    <div className="absolute inset-0 bg-primary-600" />
 
                     {/* Grain texture */}
                     <div className="absolute inset-0 grain-overlay" />
-
-                    {/* Grid pattern */}
-                    <div className="absolute inset-0 bg-grid-pattern opacity-10" />
 
                     {/* Floating decorative elements */}
                     <motion.div

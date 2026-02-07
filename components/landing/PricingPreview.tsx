@@ -122,7 +122,7 @@ export default function PricingPreview() {
                         transition={{ delay: 0.1 }}
                         className="text-responsive-lg font-display text-gray-900 dark:text-white mb-5"
                     >
-                        Start Free, <span className="gradient-text">Scale As You Grow</span>
+                        Start Free, <span className="text-primary-600 dark:text-primary-400">Scale As You Grow</span>
                     </motion.h2>
                     <motion.p
                         initial={{ opacity: 0, y: 20 }}
@@ -151,7 +151,7 @@ export default function PricingPreview() {
                                 {/* Popular badge */}
                                 {plan.popular && (
                                     <div className="absolute -top-0.5 left-0 right-0">
-                                        <div className={`bg-gradient-to-r ${plan.gradient} text-white text-center py-1.5 text-xs font-bold uppercase tracking-wider rounded-t-2xl flex items-center justify-center gap-1.5`}>
+                                        <div className="bg-primary-600 text-white text-center py-1.5 text-xs font-bold uppercase tracking-wider rounded-t-2xl flex items-center justify-center gap-1.5">
                                             <Sparkles className="h-3.5 w-3.5" />
                                             Most Popular
                                             <Sparkles className="h-3.5 w-3.5" />
@@ -190,7 +190,7 @@ export default function PricingPreview() {
                                                 transition={{ duration: 0.3, delay: index * 0.1 + i * 0.05 }}
                                                 className="flex items-start gap-3"
                                             >
-                                                <div className={`flex-shrink-0 w-5 h-5 rounded-full bg-gradient-to-br ${plan.gradient} flex items-center justify-center mt-0.5`}>
+                                                <div className={`flex-shrink-0 w-5 h-5 rounded-full ${plan.popular ? 'bg-primary-600' : 'bg-gray-400 dark:bg-gray-600'} flex items-center justify-center mt-0.5`}>
                                                     <Check className="h-3 w-3 text-white" strokeWidth={3} />
                                                 </div>
                                                 <span className="text-sm text-gray-700 dark:text-gray-300">
@@ -205,7 +205,7 @@ export default function PricingPreview() {
                                         <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
                                             <Button
                                                 variant={plan.popular ? 'primary' : 'outline'}
-                                                className={`w-full ${plan.popular ? 'animated-gradient text-white border-none shadow-lg btn-glow' : 'border-2'}`}
+                                                className={`w-full ${plan.popular ? 'bg-primary-600 hover:bg-primary-700 text-white border-none shadow-lg' : 'border-2'}`}
                                                 size="lg"
                                             >
                                                 {plan.cta}
@@ -230,7 +230,7 @@ export default function PricingPreview() {
                     <p className="text-gray-600 dark:text-gray-400 mb-4">
                         All plans include 3-day free trial • No credit card required to start
                     </p>
-                    <Link href="/pricing" className="inline-flex items-center gap-1 text-primary-600 hover:text-primary-700 dark:text-primary-400 font-semibold animated-underline">
+                    <Link href="/pricing" className="inline-flex items-center gap-1 text-primary-600 hover:text-primary-700 dark:text-primary-400 font-semibold hover:underline">
                         View detailed pricing comparison
                         <ArrowRight className="h-4 w-4" />
                     </Link>

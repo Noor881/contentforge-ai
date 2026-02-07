@@ -57,7 +57,7 @@ export default function PricingPage() {
                 <article className="container-custom">
                     <header className="text-center mb-16">
                         <h1 className="text-responsive-xl font-display font-bold text-gray-900 dark:text-white mb-6">
-                            Simple, <span className="gradient-text">Transparent Pricing</span>
+                            Simple, <span className="text-primary-600 dark:text-primary-400">Transparent Pricing</span>
                         </h1>
                         <p className="text-responsive-md text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
                             Start creating amazing AI-generated content today. All plans include a 3-day free trial with no credit card required.

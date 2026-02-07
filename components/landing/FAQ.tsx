@@ -68,7 +68,7 @@ export default function FAQ() {
                         transition={{ delay: 0.1 }}
                         className="text-responsive-lg font-display text-gray-900 dark:text-white mb-5"
                     >
-                        Frequently Asked <span className="gradient-text">Questions</span>
+                        Frequently Asked <span className="text-primary-600 dark:text-primary-400">Questions</span>
                     </motion.h2>
                     <motion.p
                         initial={{ opacity: 0, y: 20 }}
@@ -104,13 +104,13 @@ export default function FAQ() {
                                         animate={{ rotate: openIndex === index ? 180 : 0 }}
                                         transition={{ duration: 0.3, ease: 'easeInOut' }}
                                         className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-colors ${openIndex === index
-                                                ? 'bg-primary-100 dark:bg-primary-900/30'
-                                                : 'bg-gray-100 dark:bg-gray-800'
+                                            ? 'bg-primary-100 dark:bg-primary-900/30'
+                                            : 'bg-gray-100 dark:bg-gray-800'
                                             }`}
                                     >
                                         <ChevronDown className={`h-4 w-4 transition-colors ${openIndex === index
-                                                ? 'text-primary-600 dark:text-primary-400'
-                                                : 'text-gray-500'
+                                            ? 'text-primary-600 dark:text-primary-400'
+                                            : 'text-gray-500'
                                             }`} />
                                     </motion.div>
                                 </button>
@@ -152,7 +152,7 @@ export default function FAQ() {
                         </p>
                         <Link
                             href="/contact"
-                            className="inline-flex items-center gap-2 text-primary-600 hover:text-primary-700 dark:text-primary-400 font-semibold animated-underline"
+                            className="inline-flex items-center gap-2 text-primary-600 hover:text-primary-700 dark:text-primary-400 font-semibold hover:underline"
                         >
                             Contact our support team
                             <span className="transform group-hover:translate-x-1 transition-transform">→</span>

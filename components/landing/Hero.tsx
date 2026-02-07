@@ -51,7 +51,7 @@ function useTypewriter(words: string[], speed = 80, pause = 2000) {
 function FloatingOrb({ delay, size, color, position }: { delay: number; size: string; color: string; position: string }) {
     return (
         <motion.div
-            className={`absolute ${size} ${color} rounded-full blur-3xl opacity-30 ${position}`}
+            className={`absolute ${size} ${color} rounded-full blur-3xl opacity-20 ${position}`}
             animate={{
                 y: [0, -30, 0],
                 x: [0, 15, 0],
@@ -156,7 +156,7 @@ export default function Hero() {
                     >
                         Create Professional{' '}
                         <br className="hidden lg:block" />
-                        <span className="gradient-text">{typedText}</span>
+                        <span className="text-primary-600 dark:text-primary-400">{typedText}</span>
                         <span className="typewriter-cursor" />
                         <br className="hidden lg:block" />
                         <span className="text-gray-900 dark:text-white">in Seconds</span>
@@ -194,7 +194,7 @@ export default function Hero() {
                             >
                                 <stat.icon className={`h-5 w-5 ${stat.color}`} />
                                 <span className="text-gray-700 dark:text-gray-300">
-                                    <strong className="font-bold text-gray-900 dark:text-white stats-glow">
+                                    <strong className="font-bold text-gray-900 dark:text-white">
                                         {stat.value}
                                     </strong>{' '}
                                     {stat.label}
@@ -215,7 +215,7 @@ export default function Hero() {
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.98 }}
                             >
-                                <Button size="lg" className="min-w-[240px] btn-glow text-lg py-4 px-8 animated-gradient text-white border-none shadow-xl">
+                                <Button size="lg" className="min-w-[240px] text-lg py-4 px-8 bg-primary-600 hover:bg-primary-700 text-white border-none shadow-xl">
                                     Start 3-Day Free Trial
                                     <ArrowRight className="ml-2 h-5 w-5" />
                                 </Button>
@@ -270,11 +270,11 @@ export default function Hero() {
                     className="mt-24 relative"
                     style={{ perspective: 1200 }}
                 >
-                    {/* Floating decorative elements */}
+                    {/* Floating decorative elements — solid colors, no gradients */}
                     <motion.div
                         animate={{ y: [0, -15, 0], rotate: [0, 5, 0] }}
                         transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-                        className="absolute -top-8 -left-4 lg:-left-12 w-20 h-20 rounded-2xl bg-gradient-to-br from-primary-500 to-teal-400 shadow-lg glow-teal flex items-center justify-center z-20"
+                        className="absolute -top-8 -left-4 lg:-left-12 w-20 h-20 rounded-2xl bg-primary-600 shadow-lg flex items-center justify-center z-20"
                     >
                         <Sparkles className="h-10 w-10 text-white" />
                     </motion.div>
@@ -282,7 +282,7 @@ export default function Hero() {
                     <motion.div
                         animate={{ y: [0, -20, 0], rotate: [0, -5, 0] }}
                         transition={{ duration: 6, delay: 1, repeat: Infinity, ease: 'easeInOut' }}
-                        className="absolute -top-6 -right-4 lg:-right-10 w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 shadow-lg glow-purple flex items-center justify-center z-20"
+                        className="absolute -top-6 -right-4 lg:-right-10 w-16 h-16 rounded-2xl bg-purple-600 shadow-lg flex items-center justify-center z-20"
                     >
                         <Zap className="h-8 w-8 text-white" />
                     </motion.div>
@@ -290,7 +290,7 @@ export default function Hero() {
                     <motion.div
                         animate={{ y: [0, -12, 0] }}
                         transition={{ duration: 4, delay: 2, repeat: Infinity, ease: 'easeInOut' }}
-                        className="absolute -bottom-6 left-12 w-14 h-14 rounded-xl bg-gradient-to-br from-orange-400 to-yellow-400 shadow-lg glow-orange flex items-center justify-center z-20"
+                        className="absolute -bottom-6 left-12 w-14 h-14 rounded-xl bg-orange-500 shadow-lg flex items-center justify-center z-20"
                     >
                         <TrendingUp className="h-7 w-7 text-white" />
                     </motion.div>
@@ -301,9 +301,9 @@ export default function Hero() {
                             rotateY: springRotateY,
                             transformStyle: 'preserve-3d',
                         }}
-                        className="rounded-2xl glass p-3 mx-auto max-w-5xl shadow-2xl gradient-border"
+                        className="rounded-2xl glass p-3 mx-auto max-w-5xl shadow-2xl border-2 border-primary-200/50 dark:border-primary-800/30"
                     >
-                        <div className="aspect-video relative rounded-xl overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900">
+                        <div className="aspect-video relative rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-900">
                             <Image
                                 src="/images/hero-dashboard.png"
                                 alt="ContentForge AI Dashboard Preview"
@@ -311,8 +311,6 @@ export default function Hero() {
                                 className="object-cover"
                                 priority
                             />
-                            {/* Overlay gradient */}
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
                         </div>
                     </motion.div>
                 </motion.div>
