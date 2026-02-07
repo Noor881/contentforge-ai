@@ -1,8 +1,9 @@
 'use client'
 
 import { useState } from 'react'
-import { ChevronDown } from 'lucide-react'
+import { ChevronDown, HelpCircle, MessageCircle } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
+import Link from 'next/link'
 
 const faqs = [
     {
@@ -15,7 +16,7 @@ const faqs = [
     },
     {
         question: 'What types of content can I generate?',
-        answer: 'You can create blog posts, social media content for all major platforms, email templates, video scripts, ad copy, and SEO meta descriptions. Each tool is optimized for its specific use case.',
+        answer: 'You can create blog posts, social media content for all major platforms, email templates, video scripts, ad copy, SEO meta descriptions, resumes, cover letters, song lyrics, podcast scripts, product descriptions, LinkedIn posts, and poetry. Each tool is optimized for its specific use case.',
     },
     {
         question: 'Is the content original and plagiarism-free?',
@@ -43,71 +44,121 @@ export default function FAQ() {
     const [openIndex, setOpenIndex] = useState<number | null>(0)
 
     return (
-        <section className="py-20">
-            <div className="container-custom">
+        <section className="relative py-24 lg:py-32 overflow-hidden">
+            {/* Background */}
+            <div className="absolute inset-0 dot-grid opacity-30" />
+
+            <div className="container-custom relative z-10">
                 {/* Header */}
                 <div className="text-center max-w-3xl mx-auto mb-16">
-                    <h2 className="text-responsive-lg font-display font-bold text-gray-900 dark:text-white mb-4">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="inline-flex items-center gap-2 rounded-full glass px-4 py-2 text-sm font-semibold mb-6"
+                    >
+                        <HelpCircle className="w-4 h-4 text-primary-500" />
+                        <span className="text-gray-700 dark:text-gray-300">Got Questions?</span>
+                    </motion.div>
+
+                    <motion.h2
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.1 }}
+                        className="text-responsive-lg font-display text-gray-900 dark:text-white mb-5"
+                    >
                         Frequently Asked <span className="gradient-text">Questions</span>
-                    </h2>
-                    <p className="text-responsive-md text-gray-600 dark:text-gray-400">
+                    </motion.h2>
+                    <motion.p
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.2 }}
+                        className="text-responsive-md text-gray-600 dark:text-gray-400"
+                    >
                         Everything you need to know about ContentForge AI
-                    </p>
+                    </motion.p>
                 </div>
 
                 {/* FAQ Accordion */}
                 <div className="max-w-3xl mx-auto space-y-4">
                     {faqs.map((faq, index) => (
-                        <div
+                        <motion.div
                             key={index}
-                            className="border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden"
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.4, delay: index * 0.05 }}
+                            className="group"
                         >
-                            <button
-                                onClick={() => setOpenIndex(openIndex === index ? null : index)}
-                                className="w-full px-6 py-5 text-left flex items-center justify-between bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors"
-                            >
-                                <span className="font-semibold text-gray-900 dark:text-white pr-8">
-                                    {faq.question}
-                                </span>
-                                <ChevronDown
-                                    className={`h-5 w-5 text-gray-500 transition-transform flex-shrink-0 ${openIndex === index ? 'rotate-180' : ''
-                                        }`}
-                                />
-                            </button>
-
-                            <AnimatePresence>
-                                {openIndex === index && (
+                            <div className={`glass-card overflow-hidden transition-all duration-300 ${openIndex === index ? 'ring-1 ring-primary-500/30' : ''}`}>
+                                <button
+                                    onClick={() => setOpenIndex(openIndex === index ? null : index)}
+                                    className="w-full px-6 py-5 text-left flex items-center justify-between hover:bg-gray-50/50 dark:hover:bg-gray-800/50 transition-colors"
+                                >
+                                    <span className="font-semibold text-gray-900 dark:text-white pr-8 text-[15px]">
+                                        {faq.question}
+                                    </span>
                                     <motion.div
-                                        initial={{ height: 0 }}
-                                        animate={{ height: 'auto' }}
-                                        exit={{ height: 0 }}
-                                        transition={{ duration: 0.3 }}
-                                        className="overflow-hidden"
+                                        animate={{ rotate: openIndex === index ? 180 : 0 }}
+                                        transition={{ duration: 0.3, ease: 'easeInOut' }}
+                                        className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-colors ${openIndex === index
+                                                ? 'bg-primary-100 dark:bg-primary-900/30'
+                                                : 'bg-gray-100 dark:bg-gray-800'
+                                            }`}
                                     >
-                                        <div className="px-6 py-5 bg-gray-50 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
-                                            <p className="text-gray-600 dark:text-gray-400">
-                                                {faq.answer}
-                                            </p>
-                                        </div>
+                                        <ChevronDown className={`h-4 w-4 transition-colors ${openIndex === index
+                                                ? 'text-primary-600 dark:text-primary-400'
+                                                : 'text-gray-500'
+                                            }`} />
                                     </motion.div>
-                                )}
-                            </AnimatePresence>
-                        </div>
+                                </button>
+
+                                <AnimatePresence>
+                                    {openIndex === index && (
+                                        <motion.div
+                                            initial={{ height: 0, opacity: 0 }}
+                                            animate={{ height: 'auto', opacity: 1 }}
+                                            exit={{ height: 0, opacity: 0 }}
+                                            transition={{ duration: 0.3, ease: 'easeInOut' }}
+                                            className="overflow-hidden"
+                                        >
+                                            <div className="px-6 pb-5 border-t border-gray-100 dark:border-gray-800/50 pt-4">
+                                                <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-[15px]">
+                                                    {faq.answer}
+                                                </p>
+                                            </div>
+                                        </motion.div>
+                                    )}
+                                </AnimatePresence>
+                            </div>
+                        </motion.div>
                     ))}
                 </div>
 
                 {/* Bottom CTA */}
-                <div className="mt-12 text-center">
-                    <p className="text-gray-600 dark:text-gray-400 mb-4">
-                        Still have questions?
-                    </p>
-                    <a
-                        href="/contact"
-                        className="text-primary-600 hover:text-primary-700 font-medium"
-                    >
-                        Contact our support team →
-                    </a>
-                </div>
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.3 }}
+                    className="mt-14 text-center"
+                >
+                    <div className="glass-card inline-flex flex-col items-center gap-4 p-8 rounded-2xl">
+                        <MessageCircle className="h-8 w-8 text-primary-500" />
+                        <p className="text-gray-700 dark:text-gray-300 font-medium">
+                            Still have questions?
+                        </p>
+                        <Link
+                            href="/contact"
+                            className="inline-flex items-center gap-2 text-primary-600 hover:text-primary-700 dark:text-primary-400 font-semibold animated-underline"
+                        >
+                            Contact our support team
+                            <span className="transform group-hover:translate-x-1 transition-transform">→</span>
+                        </Link>
+                    </div>
+                </motion.div>
             </div>
         </section>
     )

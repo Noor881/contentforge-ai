@@ -1,11 +1,12 @@
 'use client'
 
 import Link from 'next/link'
-import { Sparkles, Twitter, Linkedin, Github } from 'lucide-react'
+import { Sparkles, Twitter, Linkedin, Github, ArrowRight } from 'lucide-react'
 import { useState } from 'react'
 import Button from '../ui/Button'
 import Input from '../ui/Input'
 import toast from 'react-hot-toast'
+import { motion } from 'framer-motion'
 
 export default function Footer() {
     const [email, setEmail] = useState('')
@@ -62,24 +63,28 @@ export default function Footer() {
     }
 
     return (
-        <footer className="bg-gray-50 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800">
-            <div className="container-custom mx-auto px-4 sm:px-6 lg:px-8 py-12">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8">
+        <footer className="relative bg-gray-50 dark:bg-gray-950 border-t border-gray-200/50 dark:border-gray-800/50">
+            {/* Subtle top gradient accent */}
+            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary-500/40 to-transparent" />
+
+            <div className="container-custom py-16">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-10">
                     {/* Brand and Newsletter */}
                     <div className="lg:col-span-2">
-                        <Link href="/" className="flex items-center space-x-2 mb-4">
-                            <Sparkles className="h-8 w-8 text-primary-600" />
-                            <span className="text-2xl font-bold gradient-text font-display">
+                        <Link href="/" className="flex items-center space-x-2 mb-4 group">
+                            <Sparkles className="h-7 w-7 text-primary-600 group-hover:text-primary-500 transition-colors" />
+                            <span className="text-xl font-extrabold gradient-text font-display">
                                 ContentForge AI
                             </span>
                         </Link>
-                        <p className="text-gray-600 dark:text-gray-400 mb-4">
-                            AI-powered content creation platform. Generate blog posts, social media content, and more in seconds.
+                        <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-6">
+                            AI-powered content creation platform. Generate blog posts, social media content,
+                            email templates, and more in seconds.
                         </p>
 
                         {/* Newsletter */}
-                        <form onSubmit={handleNewsletterSubmit} className="mt-6">
-                            <p className="text-sm font-semibold text-gray-900 dark:text-white mb-2">
+                        <form onSubmit={handleNewsletterSubmit}>
+                            <p className="text-sm font-bold text-gray-900 dark:text-white mb-3">
                                 Subscribe to our newsletter
                             </p>
                             <div className="flex gap-2">
@@ -91,24 +96,26 @@ export default function Footer() {
                                     required
                                     className="flex-1"
                                 />
-                                <Button type="submit" size="sm" isLoading={isLoading}>
-                                    Subscribe
-                                </Button>
+                                <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
+                                    <Button type="submit" size="sm" isLoading={isLoading} className="animated-gradient text-white border-none">
+                                        <ArrowRight className="h-4 w-4" />
+                                    </Button>
+                                </motion.div>
                             </div>
                         </form>
                     </div>
 
                     {/* Product Links */}
                     <div>
-                        <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-4 uppercase tracking-wider">
+                        <h3 className="text-xs font-bold text-gray-900 dark:text-white mb-4 uppercase tracking-wider">
                             Product
                         </h3>
-                        <ul className="space-y-3">
+                        <ul className="space-y-2.5">
                             {footerLinks.product.map((link) => (
                                 <li key={link.name}>
                                     <Link
                                         href={link.href}
-                                        className="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+                                        className="text-sm text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
                                     >
                                         {link.name}
                                     </Link>
@@ -119,15 +126,15 @@ export default function Footer() {
 
                     {/* Company Links */}
                     <div>
-                        <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-4 uppercase tracking-wider">
+                        <h3 className="text-xs font-bold text-gray-900 dark:text-white mb-4 uppercase tracking-wider">
                             Company
                         </h3>
-                        <ul className="space-y-3">
+                        <ul className="space-y-2.5">
                             {footerLinks.company.map((link) => (
                                 <li key={link.name}>
                                     <Link
                                         href={link.href}
-                                        className="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+                                        className="text-sm text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
                                     >
                                         {link.name}
                                     </Link>
@@ -138,15 +145,15 @@ export default function Footer() {
 
                     {/* Support Links */}
                     <div>
-                        <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-4 uppercase tracking-wider">
+                        <h3 className="text-xs font-bold text-gray-900 dark:text-white mb-4 uppercase tracking-wider">
                             Support
                         </h3>
-                        <ul className="space-y-3">
+                        <ul className="space-y-2.5">
                             {footerLinks.support.map((link) => (
                                 <li key={link.name}>
                                     <Link
                                         href={link.href}
-                                        className="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+                                        className="text-sm text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
                                     >
                                         {link.name}
                                     </Link>
@@ -157,15 +164,15 @@ export default function Footer() {
 
                     {/* Legal Links */}
                     <div>
-                        <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-4 uppercase tracking-wider">
+                        <h3 className="text-xs font-bold text-gray-900 dark:text-white mb-4 uppercase tracking-wider">
                             Legal
                         </h3>
-                        <ul className="space-y-3">
+                        <ul className="space-y-2.5">
                             {footerLinks.legal.map((link) => (
                                 <li key={link.name}>
                                     <Link
                                         href={link.href}
-                                        className="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+                                        className="text-sm text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
                                     >
                                         {link.name}
                                     </Link>
@@ -176,38 +183,30 @@ export default function Footer() {
                 </div>
 
                 {/* Bottom Bar */}
-                <div className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-800">
+                <div className="mt-14 pt-8 border-t border-gray-200/50 dark:border-gray-800/50">
                     <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-                        <p className="text-gray-600 dark:text-gray-400 text-sm">
+                        <p className="text-gray-500 dark:text-gray-500 text-sm">
                             © 2026 ContentForge AI. All rights reserved.
                         </p>
 
                         {/* Social Links */}
-                        <div className="flex items-center space-x-4">
-                            <a
-                                href="https://twitter.com"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
-                            >
-                                <Twitter className="h-5 w-5" />
-                            </a>
-                            <a
-                                href="https://linkedin.com"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
-                            >
-                                <Linkedin className="h-5 w-5" />
-                            </a>
-                            <a
-                                href="https://github.com"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
-                            >
-                                <Github className="h-5 w-5" />
-                            </a>
+                        <div className="flex items-center space-x-3">
+                            {[
+                                { icon: Twitter, href: 'https://twitter.com', label: 'Twitter' },
+                                { icon: Linkedin, href: 'https://linkedin.com', label: 'LinkedIn' },
+                                { icon: Github, href: 'https://github.com', label: 'GitHub' },
+                            ].map((social) => (
+                                <motion.a
+                                    key={social.label}
+                                    href={social.href}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    whileHover={{ y: -3, scale: 1.1 }}
+                                    className="w-9 h-9 rounded-xl bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                                >
+                                    <social.icon className="h-4 w-4" />
+                                </motion.a>
+                            ))}
                         </div>
                     </div>
                 </div>

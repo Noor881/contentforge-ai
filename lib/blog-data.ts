@@ -16,6 +16,8 @@ export interface BlogPost {
     metaDescription: string
     keywords: string[]
     tableOfContents: { id: string; title: string; level: number }[]
+    coverGradient?: string
+    coverIcon?: string
 }
 
 export const blogPosts: BlogPost[] = [
