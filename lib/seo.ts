@@ -213,3 +213,26 @@ export function generateBreadcrumbSchema(items: Array<{ name: string; url: strin
         })),
     }
 }
+
+export function generateSiteNavigationSchema() {
+    const navigationItems = [
+        { name: 'Features', url: '/features' },
+        { name: 'Pricing', url: '/pricing' },
+        { name: 'Blog', url: '/blog' },
+        { name: 'About', url: '/about' },
+        { name: 'Contact', url: '/contact' },
+        { name: 'Login', url: '/login' },
+        { name: 'Sign Up', url: '/signup' },
+    ]
+
+    return {
+        '@context': 'https://schema.org',
+        '@type': 'ItemList',
+        itemListElement: navigationItems.map((item, index) => ({
+            '@type': 'SiteNavigationElement',
+            position: index + 1,
+            name: item.name,
+            url: `${APP_URL}${item.url}`,
+        })),
+    }
+}

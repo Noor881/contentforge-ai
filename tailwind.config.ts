@@ -84,6 +84,8 @@ const config: Config = {
                 'fade-up': 'fadeUp 0.4s ease-out',
                 'slide-in': 'slideIn 0.3s ease-out',
                 'scale-in': 'scaleIn 0.2s ease-out',
+                'gradient': 'gradientMove 3s ease infinite',
+                'shimmer': 'shimmerMove 2s ease-in-out infinite',
             },
             keyframes: {
                 fadeIn: {
@@ -101,6 +103,14 @@ const config: Config = {
                 scaleIn: {
                     '0%': { transform: 'scale(0.95)', opacity: '0' },
                     '100%': { transform: 'scale(1)', opacity: '1' },
+                },
+                gradientMove: {
+                    '0%, 100%': { backgroundPosition: '0% 50%' },
+                    '50%': { backgroundPosition: '100% 50%' },
+                },
+                shimmerMove: {
+                    '0%': { transform: 'translateX(-100%)' },
+                    '100%': { transform: 'translateX(100%)' },
                 },
             },
             boxShadow: {

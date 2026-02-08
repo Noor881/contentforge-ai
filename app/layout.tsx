@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter, Outfit } from 'next/font/google'
 import './globals.css'
-import { generateMetadata as genMeta, generateOrganizationSchema, generateWebsiteSchema } from '@/lib/seo'
+import { generateMetadata as genMeta, generateOrganizationSchema, generateWebsiteSchema, generateSiteNavigationSchema } from '@/lib/seo'
 import Toast from '@/components/ui/Toast'
 import ScrollProgress from '@/components/ui/ScrollProgress'
 import { SessionProvider } from 'next-auth/react'
@@ -30,6 +30,7 @@ export default function RootLayout({
 }) {
     const organizationSchema = generateOrganizationSchema()
     const websiteSchema = generateWebsiteSchema()
+    const siteNavigationSchema = generateSiteNavigationSchema()
 
     return (
         <html lang="en" className={`${inter.variable} ${outfit.variable}`}>
@@ -45,6 +46,12 @@ export default function RootLayout({
                     type="application/ld+json"
                     dangerouslySetInnerHTML={{
                         __html: JSON.stringify(websiteSchema),
+                    }}
+                />
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{
+                        __html: JSON.stringify(siteNavigationSchema),
                     }}
                 />
 
