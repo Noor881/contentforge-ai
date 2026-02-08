@@ -55,6 +55,14 @@ const faqs = [
         question: 'Do you offer refunds?',
         answer: 'We offer a 30-day money-back guarantee for all new subscriptions. If you\'re not satisfied with ContentForge AI, contact us within 30 days for a full refund.',
     },
+    {
+        question: 'How does the AI Image Generator work?',
+        answer: 'Our AI Image Generator uses cutting-edge models like FLUX.1, Stable Diffusion XL, and DreamShaper to create stunning images from text descriptions. Simply describe what you want, choose a model, and generate professional-quality images in seconds. It\'s free to use with our Hugging Face integration.',
+    },
+    {
+        question: 'Can I generate videos with AI?',
+        answer: 'Yes! Our Text-to-Video feature uses advanced AI models like CogVideoX and AnimateDiff to create short video clips from text prompts. Perfect for social media content, marketing materials, or creative projects. Available free with your ContentForge AI account.',
+    },
 ]
 
 export default function HomePage() {

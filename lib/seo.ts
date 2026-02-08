@@ -30,28 +30,51 @@ export function generateMetadata({
             'AI content creation',
             'content generator',
             'AI writing tool',
+            // AI Image Generation keywords
+            'AI image generator',
+            'free AI image generator',
+            'text to image AI',
+            'AI art generator online',
+            'AI image generation from text',
+            'stable diffusion online free',
+            'FLUX AI image generator',
+            // AI Video Generation keywords
+            'AI video generator',
+            'text to video AI',
+            'AI video maker from text',
+            'free AI video generator',
+            'AI video creation tool',
+            'text to video converter AI',
             // Long-tail keywords - Informational intent
             'how to use AI for content creation',
             'AI content generation tutorial for beginners',
             'best AI tools for writing blog posts 2024',
+            'how to generate images with AI free',
+            'best AI image generators 2024',
             // Long-tail keywords - Commercial intent
             'free AI content generator online',
             'AI blog post writer for small business',
             'affordable AI writing assistant',
+            'free AI image creator no signup',
+            'best free text to video AI tool',
             // Long-tail keywords - Feature-specific
             'automated social media content creation tool',
             'AI email marketing template generator',
             'professional video script AI writer',
             'AI ad copy generator for Facebook Google LinkedIn',
             'SEO optimized content generator',
+            'AI powered image generation for marketing',
             // Long-tail keywords - Use-case specific
             'AI writing tool for content marketing',
             'generate blog posts with artificial intelligence',
             'create social media posts automatically',
             'AI powered email newsletter writer',
+            'create product images with AI',
+            'AI video for social media content',
             // Brand + category keywords
             'ContentForge AI content platform',
             'best AI content creation software 2024',
+            'all in one AI content and image generator',
         ],
         authors: [{ name: APP_NAME }],
         creator: APP_NAME,
@@ -234,5 +257,47 @@ export function generateSiteNavigationSchema() {
             name: item.name,
             url: `${APP_URL}${item.url}`,
         })),
+    }
+}
+
+export function generateAIToolSchema({
+    name,
+    description,
+    url,
+    category,
+}: {
+    name: string
+    description: string
+    url: string
+    category: 'ImageGeneration' | 'VideoGeneration' | 'TextGeneration'
+}) {
+    return {
+        '@context': 'https://schema.org',
+        '@type': 'SoftwareApplication',
+        name,
+        description,
+        url: `${APP_URL}${url}`,
+        applicationCategory: category === 'ImageGeneration'
+            ? 'MultimediaApplication'
+            : category === 'VideoGeneration'
+                ? 'MultimediaApplication'
+                : 'BusinessApplication',
+        operatingSystem: 'Web Browser',
+        offers: {
+            '@type': 'Offer',
+            price: '0',
+            priceCurrency: 'USD',
+            description: 'Free tier available with Hugging Face API',
+        },
+        provider: {
+            '@type': 'Organization',
+            name: APP_NAME,
+            url: APP_URL,
+        },
+        featureList: category === 'ImageGeneration'
+            ? ['FLUX.1 Schnell', 'Stable Diffusion XL', 'Stable Diffusion 3.5', 'DreamShaper XL', 'Realistic Vision', 'OpenJourney']
+            : category === 'VideoGeneration'
+                ? ['CogVideoX', 'AnimateDiff Lightning', 'ModelScope T2V', 'Zeroscope V2']
+                : ['Blog Posts', 'Social Media', 'Email Templates', 'Ad Copy'],
     }
 }

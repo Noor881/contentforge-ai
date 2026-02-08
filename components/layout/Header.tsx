@@ -2,13 +2,21 @@
 
 import Link from 'next/link'
 import { useState, useRef, useEffect } from 'react'
-import { Menu, X, Sparkles, ArrowRight, ChevronDown, Pencil, MessageSquare, Mail, Video, Target, Search, FileText, Music, Mic, ShoppingBag, Share2, Feather, BookOpen, Volume2 } from 'lucide-react'
+import { Menu, X, Sparkles, ArrowRight, ChevronDown, Pencil, MessageSquare, Mail, Video, Target, Search, FileText, Music, Mic, ShoppingBag, Share2, Feather, BookOpen, Volume2, ImageIcon, Wand2 } from 'lucide-react'
 import Button from '../ui/Button'
 import { useSession } from 'next-auth/react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 // Tool categories for mega-menu
 const toolCategories = [
+    {
+        name: '✨ AI Studio',
+        featured: true,
+        tools: [
+            { name: 'AI Image Generator', href: '/dashboard/create/image-gen', icon: ImageIcon, color: 'text-primary-600', bg: 'bg-primary-100 dark:bg-primary-900/30' },
+            { name: 'AI Text-to-Video', href: '/dashboard/create/text-to-video', icon: Video, color: 'text-primary-600', bg: 'bg-primary-100 dark:bg-primary-900/30' },
+        ],
+    },
     {
         name: 'Content Writing',
         tools: [
@@ -173,7 +181,7 @@ export default function Header() {
                                                 >
                                                     <div>
                                                         <p className="text-sm font-semibold text-primary-700 dark:text-primary-400">
-                                                            Explore All 15+ AI Tools
+                                                            Explore All 17+ AI Tools
                                                         </p>
                                                         <p className="text-xs text-primary-600/70 dark:text-primary-500/70">
                                                             See detailed features and examples
