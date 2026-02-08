@@ -301,14 +301,14 @@ export default function AdminSettingsPage() {
                                 <span className="font-medium text-gray-900 dark:text-white">Free</span>
                                 <span className="text-gray-500">$0/mo</span>
                             </div>
-                            <p className="text-sm text-gray-500">10 generations/month</p>
+                            <p className="text-sm text-gray-500">3 generations (lifetime)</p>
                         </div>
                         <div className="p-3 bg-gray-50 dark:bg-gray-900 rounded-lg">
                             <div className="flex justify-between mb-1">
                                 <span className="font-medium text-gray-900 dark:text-white">Starter</span>
                                 <span className="text-gray-500">$19/mo</span>
                             </div>
-                            <p className="text-sm text-gray-500">100 generations/month</p>
+                            <p className="text-sm text-gray-500">50 generations/month</p>
                         </div>
                         <div className="p-3 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800">
                             <div className="flex justify-between mb-1">

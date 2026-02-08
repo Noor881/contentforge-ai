@@ -1,195 +1,124 @@
 'use client'
 
-import {
-    Pencil,
-    MessageSquare,
-    Mail,
-    Video,
-    Target,
-    Search,
-    FileText,
-    Music,
-    Mic,
-    ShoppingBag,
-    Share2,
-    Feather,
-    ArrowRight,
-} from 'lucide-react'
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
-import { useRef } from 'react'
-import Link from 'next/link'
+import { motion } from 'framer-motion'
+import { useRef, useState } from 'react'
 
-const features = [
+const steps = [
     {
-        icon: Pencil,
-        title: 'Blog Post Generator',
-        description: 'Create SEO-optimized blog posts in any tone and length. Perfect for content marketing.',
-        accent: 'bg-teal-600',
-        link: '/dashboard/create/blog',
+        number: 1,
+        title: 'Give the AI something to work with.',
+        description: 'Fill in a few details about your content — product name, topic, tone, and any key points you want covered.',
+        video: 'https://contentforge.ai/videos/step-1.mp4',
+        accent: 'bg-primary-600',
+        accentText: 'text-primary-600',
+        accentBorder: 'border-primary-600',
     },
     {
-        icon: MessageSquare,
-        title: 'Social Media Content',
-        description: 'Generate engaging posts for Twitter, LinkedIn, Instagram, and Facebook.',
-        accent: 'bg-blue-600',
-        link: '/dashboard/create/social',
-    },
-    {
-        icon: Mail,
-        title: 'Email Templates',
-        description: 'Craft compelling marketing emails, newsletters, and campaigns that convert.',
-        accent: 'bg-rose-600',
-        link: '/dashboard/create/email',
-    },
-    {
-        icon: Video,
-        title: 'Video Scripts',
-        description: 'Write professional video scripts with hooks, timing cues, and calls-to-action.',
-        accent: 'bg-red-600',
-        link: '/dashboard/create/video',
-    },
-    {
-        icon: Target,
-        title: 'Ad Copy',
-        description: 'Create high-converting ad copy for Google, Facebook, and Instagram ads.',
-        accent: 'bg-amber-600',
-        link: '/dashboard/create/ad',
-    },
-    {
-        icon: Search,
-        title: 'SEO Meta Descriptions',
-        description: 'Generate keyword-optimized meta descriptions that boost your search rankings.',
-        accent: 'bg-green-600',
-        link: '/dashboard/create/seo',
-    },
-    {
-        icon: FileText,
-        title: 'Resume Builder',
-        description: 'Build ATS-friendly, professional resumes optimized for your target job role.',
-        accent: 'bg-indigo-600',
-        link: '/dashboard/create/resume',
-    },
-    {
-        icon: FileText,
-        title: 'Cover Letter Generator',
-        description: 'Write personalized cover letters that highlight your skills and experience.',
-        accent: 'bg-sky-600',
-        link: '/dashboard/create/coverletter',
-    },
-    {
-        icon: Music,
-        title: 'Song Lyrics Creator',
-        description: 'Generate original song lyrics for any genre, theme, and mood.',
-        accent: 'bg-pink-600',
-        link: '/dashboard/create/lyrics',
-    },
-    {
-        icon: Mic,
-        title: 'Podcast Script Writer',
-        description: 'Create engaging podcast scripts with timestamps, intros, and show notes.',
-        accent: 'bg-orange-600',
-        link: '/dashboard/create/podcast',
-    },
-    {
-        icon: ShoppingBag,
-        title: 'Product Descriptions',
-        description: 'Write compelling product descriptions that drive sales and conversions.',
-        accent: 'bg-yellow-600',
-        link: '/dashboard/create/product',
-    },
-    {
-        icon: Share2,
-        title: 'LinkedIn Posts',
-        description: 'Craft professional LinkedIn content that builds your personal brand.',
-        accent: 'bg-blue-700',
-        link: '/dashboard/create/linkedin',
-    },
-    {
-        icon: Feather,
-        title: 'Poetry Generator',
-        description: 'Create beautiful, creative poems in various styles and formats.',
+        number: 2,
+        title: 'Watch the AI generate unique, high-quality content.',
+        description: 'Our AI engine crafts original, engaging content tailored to your inputs — in just seconds.',
+        video: 'https://contentforge.ai/videos/step-2.mp4',
         accent: 'bg-purple-600',
-        link: '/dashboard/create/poetry',
+        accentText: 'text-purple-600',
+        accentBorder: 'border-purple-600',
+    },
+    {
+        number: 3,
+        title: 'Save and edit the content to your liking.',
+        description: 'Review the results, make quick edits, and save or export your content — ready to publish anywhere.',
+        video: 'https://contentforge.ai/videos/step-3.mp4',
+        accent: 'bg-orange-500',
+        accentText: 'text-orange-500',
+        accentBorder: 'border-orange-500',
     },
 ]
 
-function FeatureCard({ feature, index }: { feature: typeof features[0]; index: number }) {
-    const cardRef = useRef<HTMLDivElement>(null)
-    const mouseX = useMotionValue(0)
-    const mouseY = useMotionValue(0)
+function StepCard({ step, index }: { step: typeof steps[0]; index: number }) {
+    const videoRef = useRef<HTMLVideoElement>(null)
+    const [isPlaying, setIsPlaying] = useState(false)
 
-    const rotateX = useTransform(mouseY, [-150, 150], [8, -8])
-    const rotateY = useTransform(mouseX, [-150, 150], [-8, 8])
-    const springRotateX = useSpring(rotateX, { stiffness: 200, damping: 25 })
-    const springRotateY = useSpring(rotateY, { stiffness: 200, damping: 25 })
-
-    const handleMouseMove = (e: React.MouseEvent) => {
-        const rect = cardRef.current?.getBoundingClientRect()
-        if (rect) {
-            mouseX.set(e.clientX - rect.left - rect.width / 2)
-            mouseY.set(e.clientY - rect.top - rect.height / 2)
+    const handlePlayPause = () => {
+        if (videoRef.current) {
+            if (isPlaying) {
+                videoRef.current.pause()
+            } else {
+                videoRef.current.play()
+            }
+            setIsPlaying(!isPlaying)
         }
     }
 
-    const handleMouseLeave = () => {
-        mouseX.set(0)
-        mouseY.set(0)
-    }
-
-    const Icon = feature.icon
-
     return (
         <motion.div
-            ref={cardRef}
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
-            style={{ perspective: 800 }}
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.6, delay: index * 0.08 }}
+            transition={{ duration: 0.6, delay: index * 0.15 }}
+            className="flex flex-col items-start"
         >
-            <motion.div
-                style={{
-                    rotateX: springRotateX,
-                    rotateY: springRotateY,
-                    transformStyle: 'preserve-3d',
-                }}
+            {/* Step Badge */}
+            <motion.span
+                whileHover={{ scale: 1.1 }}
+                className={`inline-flex items-center justify-center px-4 py-1.5 rounded-full text-sm font-bold text-white ${step.accent} shadow-lg mb-5`}
             >
-                <Link href={feature.link}>
-                    <div className="group relative h-full glass-card p-6 cursor-pointer overflow-hidden">
-                        {/* Subtle hover background */}
-                        <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gray-50 dark:bg-gray-800/30" />
+                Step {step.number}.
+            </motion.span>
 
-                        {/* Top accent line */}
-                        <div className={`absolute top-0 left-0 right-0 h-1 ${feature.accent} rounded-t-2xl transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500`} />
+            {/* Step Title */}
+            <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-3 leading-snug">
+                {step.title}
+            </h3>
 
-                        {/* Icon with solid background */}
-                        <div className={`relative inline-flex rounded-xl p-3.5 ${feature.accent} shadow-lg mb-4 group-hover:shadow-xl transition-shadow duration-300`}>
-                            <Icon className="h-6 w-6 text-white" />
+            {/* Step Description */}
+            <p className="text-sm text-gray-500 dark:text-gray-400 mb-6 leading-relaxed">
+                {step.description}
+            </p>
 
-                            {/* Shimmer effect on hover */}
-                            <div className="absolute inset-0 rounded-xl overflow-hidden">
-                                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
-                            </div>
-                        </div>
+            {/* Video Container */}
+            <div
+                className="relative w-full rounded-2xl overflow-hidden shadow-xl border border-gray-200 dark:border-gray-700/50 bg-white dark:bg-gray-900 cursor-pointer group"
+                onClick={handlePlayPause}
+            >
+                {/* Subtle glow behind the card */}
+                <div className={`absolute -inset-1 rounded-2xl opacity-0 group-hover:opacity-20 transition-opacity duration-500 blur-xl ${step.accent}`} />
 
-                        {/* Content */}
-                        <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
-                            {feature.title}
-                        </h3>
-                        <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
-                            {feature.description}
-                        </p>
+                <div className="relative aspect-[4/3] bg-gray-50 dark:bg-gray-900">
+                    <video
+                        ref={videoRef}
+                        src={step.video}
+                        className="w-full h-full object-cover"
+                        loop
+                        muted
+                        playsInline
+                        preload="metadata"
+                        onPlay={() => setIsPlaying(true)}
+                        onPause={() => setIsPlaying(false)}
+                    />
 
-                        {/* Animated arrow */}
-                        <div className="flex items-center text-sm font-semibold text-primary-600 dark:text-primary-400 opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300">
-                            Try it now
-                            <ArrowRight className="h-4 w-4 ml-1 transform group-hover:translate-x-1 transition-transform" />
-                        </div>
-                    </div>
-                </Link>
-            </motion.div>
+                    {/* Play overlay */}
+                    {!isPlaying && (
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            className="absolute inset-0 flex items-center justify-center bg-black/20 backdrop-blur-[1px]"
+                        >
+                            <motion.div
+                                whileHover={{ scale: 1.15 }}
+                                whileTap={{ scale: 0.95 }}
+                                className={`w-14 h-14 rounded-full ${step.accent} shadow-2xl flex items-center justify-center`}
+                            >
+                                <svg
+                                    className="w-6 h-6 text-white ml-1"
+                                    fill="currentColor"
+                                    viewBox="0 0 20 20"
+                                >
+                                    <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
+                                </svg>
+                            </motion.div>
+                        </motion.div>
+                    )}
+                </div>
+            </div>
         </motion.div>
     )
 }
@@ -212,7 +141,7 @@ export default function Features() {
                         className="inline-flex items-center gap-2 rounded-full glass px-4 py-2 text-sm font-semibold mb-6"
                     >
                         <span className="w-2 h-2 rounded-full bg-primary-500 animate-pulse" />
-                        <span className="text-gray-700 dark:text-gray-300">13+ AI-Powered Tools</span>
+                        <span className="text-gray-700 dark:text-gray-300">Simple 3-Step Process</span>
                     </motion.div>
 
                     <motion.h2
@@ -222,8 +151,8 @@ export default function Features() {
                         transition={{ duration: 0.6, delay: 0.1 }}
                         className="text-responsive-lg font-display text-gray-900 dark:text-white mb-5"
                     >
-                        Everything You Need to{' '}
-                        <span className="text-primary-600 dark:text-primary-400">Scale Your Content</span>
+                        How it{' '}
+                        <span className="text-primary-600 dark:text-primary-400">Works</span>
                     </motion.h2>
 
                     <motion.p
@@ -233,36 +162,18 @@ export default function Features() {
                         transition={{ duration: 0.6, delay: 0.2 }}
                         className="text-responsive-md text-gray-600 dark:text-gray-400"
                     >
-                        13+ powerful AI tools to create any type of content your business needs.
-                        From blog posts to video scripts, we&apos;ve got you covered.
+                        Use Tools to generate all kinds of short-form content, such as blog post
+                        outlines and product descriptions. Use Documents to create and generate
+                        long-form content, like full blog posts and website pages, with the help of AI.
                     </motion.p>
                 </div>
 
-                {/* Features Grid with 3D Cards */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-                    {features.map((feature, index) => (
-                        <FeatureCard key={index} feature={feature} index={index} />
+                {/* Steps Grid — 3 columns on desktop */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-10 lg:gap-14">
+                    {steps.map((step, index) => (
+                        <StepCard key={step.number} step={step} index={index} />
                     ))}
                 </div>
-
-                {/* Bottom CTA */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6 }}
-                    className="mt-20 text-center"
-                >
-                    <Link href="/features">
-                        <motion.span
-                            whileHover={{ scale: 1.05 }}
-                            className="inline-flex items-center gap-2 text-primary-600 dark:text-primary-400 font-semibold text-lg cursor-pointer hover:underline"
-                        >
-                            Explore all features in detail
-                            <ArrowRight className="h-5 w-5" />
-                        </motion.span>
-                    </Link>
-                </motion.div>
             </div>
         </section>
     )

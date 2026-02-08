@@ -262,58 +262,7 @@ export default function Hero() {
                     </motion.div>
                 </div>
 
-                {/* 3D Product Preview with Mouse-Tracking Perspective */}
-                <motion.div
-                    initial={{ opacity: 0, y: 60 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.9, delay: 0.8 }}
-                    className="mt-24 relative"
-                    style={{ perspective: 1200 }}
-                >
-                    {/* Floating decorative elements — solid colors, no gradients */}
-                    <motion.div
-                        animate={{ y: [0, -15, 0], rotate: [0, 5, 0] }}
-                        transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-                        className="absolute -top-8 -left-4 lg:-left-12 w-20 h-20 rounded-2xl bg-primary-600 shadow-lg flex items-center justify-center z-20"
-                    >
-                        <Sparkles className="h-10 w-10 text-white" />
-                    </motion.div>
 
-                    <motion.div
-                        animate={{ y: [0, -20, 0], rotate: [0, -5, 0] }}
-                        transition={{ duration: 6, delay: 1, repeat: Infinity, ease: 'easeInOut' }}
-                        className="absolute -top-6 -right-4 lg:-right-10 w-16 h-16 rounded-2xl bg-purple-600 shadow-lg flex items-center justify-center z-20"
-                    >
-                        <Zap className="h-8 w-8 text-white" />
-                    </motion.div>
-
-                    <motion.div
-                        animate={{ y: [0, -12, 0] }}
-                        transition={{ duration: 4, delay: 2, repeat: Infinity, ease: 'easeInOut' }}
-                        className="absolute -bottom-6 left-12 w-14 h-14 rounded-xl bg-orange-500 shadow-lg flex items-center justify-center z-20"
-                    >
-                        <TrendingUp className="h-7 w-7 text-white" />
-                    </motion.div>
-
-                    <motion.div
-                        style={{
-                            rotateX: springRotateX,
-                            rotateY: springRotateY,
-                            transformStyle: 'preserve-3d',
-                        }}
-                        className="rounded-2xl glass p-3 mx-auto max-w-5xl shadow-2xl border-2 border-primary-200/50 dark:border-primary-800/30"
-                    >
-                        <div className="aspect-video relative rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-900">
-                            <Image
-                                src="/images/hero-dashboard.png"
-                                alt="ContentForge AI Dashboard Preview"
-                                fill
-                                className="object-cover"
-                                priority
-                            />
-                        </div>
-                    </motion.div>
-                </motion.div>
             </div>
         </section>
     )
