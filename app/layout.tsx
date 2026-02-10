@@ -5,6 +5,7 @@ import { generateMetadata as genMeta, generateOrganizationSchema, generateWebsit
 import Toast from '@/components/ui/Toast'
 import ScrollProgress from '@/components/ui/ScrollProgress'
 import { SessionProvider } from 'next-auth/react'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 
 const inter = Inter({
     subsets: ['latin'],
@@ -74,6 +75,7 @@ export default function RootLayout({
                     {children}
                     <Toast />
                 </SessionProvider>
+                <SpeedInsights />
             </body>
         </html>
     )
